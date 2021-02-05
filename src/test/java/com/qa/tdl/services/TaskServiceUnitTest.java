@@ -23,6 +23,7 @@ import com.qa.tdl.persistance.domain.AssigneeDomain;
 import com.qa.tdl.persistance.domain.TaskDomain;
 import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.dtos.TaskDTO;
+import com.qa.tdl.persistance.repos.AssigneeRepo;
 import com.qa.tdl.persistance.repos.TaskRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -32,6 +33,9 @@ public class TaskServiceUnitTest {
 	
 	@MockBean
 	private TaskRepo repo;
+	
+	@MockBean
+	private AssigneeRepo assigneeRepo;
 	
 	@MockBean
 	private ModelMapper mapper;
@@ -120,7 +124,7 @@ public class TaskServiceUnitTest {
 	@Test
 	public void updateTest() {
 		Long id = 1L;
-		TaskDomain TEST_TASK = new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
+		TaskDomain TEST_TASK = new TaskDomain(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
 		TaskDomain TEST_TASK_UPDATE = new TaskDomain(id, "Buy pens", false, Timestamp.from(Instant.now()), Set.of(new AssigneeDomain(1L, "Jane", null)));
 		Optional<TaskDomain> TEST_OPTIONAL = Optional.of(TEST_TASK);
 		TaskDTO TEST_DTO_UPDATE = new TaskDTO(TEST_TASK_UPDATE.getId(),TEST_TASK_UPDATE.getTitle(), TEST_TASK_UPDATE.getCompleted(), TEST_TASK_UPDATE.getDateTimeSet(), Set.of(new AssigneeDTO(1L, "Jane")));
@@ -137,6 +141,36 @@ public class TaskServiceUnitTest {
 			.isEqualTo(TEST_DTO_UPDATE);
 		
 		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
+		Mockito.verify(this.repo, Mockito.times(1)).save(Mockito.any(TaskDomain.class));
+	}
+	
+	@Test
+	public void addAssigneeTest() {
+		Long id = 4L;
+		Long assigneeId = 2L;
+		
+		AssigneeDomain TEST_ASSIGNEE = new AssigneeDomain(assigneeId, "Bob", null);
+		Optional<AssigneeDomain> TEST_ASSIGNEE_OPTIONAL = Optional.of(TEST_ASSIGNEE);
+		
+		TaskDomain TEST_TASK = new TaskDomain(id, "Buy masks", false, Timestamp.valueOf("2021-02-01 03:30:00"), new HashSet<>());
+		TaskDomain TEST_TASK_UPDATE = new TaskDomain(id, "Buy masks", false, Timestamp.valueOf("2021-02-01 03:30:00"), Set.of(TEST_ASSIGNEE));
+		Optional<TaskDomain> TEST_OPTIONAL = Optional.of(TEST_TASK);
+		TaskDTO TEST_DTO_UPDATE = new TaskDTO(TEST_TASK_UPDATE.getId(),TEST_TASK_UPDATE.getTitle(), TEST_TASK_UPDATE.getCompleted(), TEST_TASK_UPDATE.getDateTimeSet(), Set.of(new AssigneeDTO(assigneeId, "Bob")));
+	
+		Mockito.when(this.repo.findById(id)).thenReturn(TEST_OPTIONAL);
+		Mockito.when(this.assigneeRepo.findById(assigneeId)).thenReturn(TEST_ASSIGNEE_OPTIONAL);
+		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK_UPDATE);
+		Mockito.when(this.mapper.map(TEST_TASK_UPDATE, TaskDTO.class)).thenReturn(TEST_DTO_UPDATE);
+		
+		TaskDTO result = this.service.addAssignee(id, TEST_ASSIGNEE.getId());
+		
+		Assertions.assertThat(result).isNotNull();
+		Assertions.assertThat(result)
+			.usingRecursiveComparison()
+			.isEqualTo(TEST_DTO_UPDATE);
+		
+		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
+		Mockito.verify(this.assigneeRepo, Mockito.times(1)).findById(assigneeId);
 		Mockito.verify(this.repo, Mockito.times(1)).save(Mockito.any(TaskDomain.class));
 	}
 }

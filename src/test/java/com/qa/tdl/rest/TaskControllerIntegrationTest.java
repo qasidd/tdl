@@ -124,6 +124,23 @@ public class TaskControllerIntegrationTest {
 		this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchContent);
 	}
 	
+	public void addAssigneeTask() throws Exception {
+		// resources
+		TaskDTO expectedResult = this.mapToDto(new TaskDomain(4L, "Buy masks", false, Timestamp.valueOf("2021-02-01 03:30:00"), Set.of(new AssigneeDomain(2L, "Bob", null))));
+		
+		// set up request
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
+					.request(HttpMethod.PUT, URL + "update/4/add-assignee?assignee_id=2");
+		
+		// set up expectations
+		ResultMatcher matchStatus = MockMvcResultMatchers.status().isAccepted();
+		ResultMatcher matchContent = MockMvcResultMatchers.content()
+				.json(jsonifier.writeValueAsString(expectedResult));
+		
+		// perform
+		this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchContent);
+	}
+	
 	// DELETE
 	@Test
 	public void removeTask() throws Exception {
