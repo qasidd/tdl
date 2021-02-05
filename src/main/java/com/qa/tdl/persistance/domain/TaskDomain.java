@@ -1,6 +1,7 @@
 package com.qa.tdl.persistance.domain;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +30,7 @@ public class TaskDomain {
 	@Column(nullable = false)
 	private Timestamp dateTimeSet;
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(
 		name = "tasks_assignees",
 		joinColumns = { @JoinColumn(name = "task_id") },
@@ -50,12 +51,29 @@ public class TaskDomain {
 		this.assignees = assignees;
 	}
 	
+	public TaskDomain(Long id, String title, Boolean completed, Timestamp dateTimeSet) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.completed = completed;
+		this.dateTimeSet = dateTimeSet;
+		this.assignees = new HashSet<>();
+	}
+	
 	public TaskDomain(String title, Boolean completed, Timestamp dateTimeSet, Set<AssigneeDomain> assignees) {
 		super();
 		this.title = title;
 		this.completed = completed;
 		this.dateTimeSet = dateTimeSet;
 		this.assignees = assignees;
+	}
+	
+	public TaskDomain(String title, Boolean completed, Timestamp dateTimeSet) {
+		super();
+		this.title = title;
+		this.completed = completed;
+		this.dateTimeSet = dateTimeSet;
+		this.assignees = new HashSet<>();
 	}
 
 	public Long getId() {
@@ -96,6 +114,14 @@ public class TaskDomain {
 	
 	public void setAssignees(Set<AssigneeDomain> assignees) {
 		this.assignees = assignees;
+	}
+	
+	public void removeAssignee(AssigneeDomain assignee) {
+		this.assignees.remove(assignee);
+	}
+	
+	public void emptyAssignees() {
+		this.assignees.clear();
 	}
 
 	@Override

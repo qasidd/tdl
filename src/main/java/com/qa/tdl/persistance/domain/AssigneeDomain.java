@@ -1,5 +1,6 @@
 package com.qa.tdl.persistance.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
 
 @Entity
 public class AssigneeDomain {
@@ -32,6 +34,19 @@ public class AssigneeDomain {
 		this.name = name;
 		this.tasks = tasks;
 	}
+	
+	public AssigneeDomain(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.tasks = new HashSet<>();
+	}
+	
+	public AssigneeDomain(String name) {
+		super();
+		this.name = name;
+		this.tasks = new HashSet<>();
+	}
 
 	public Long getId() {
 		return id;
@@ -55,6 +70,12 @@ public class AssigneeDomain {
 	
 	public void setTasks(Set<TaskDomain> tasks) {
 		this.tasks = tasks;
+	}
+	
+	public void removeTasks() {
+		for (TaskDomain task : tasks) {
+			task.removeAssignee(this);
+		}
 	}
 
 	@Override

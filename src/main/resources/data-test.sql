@@ -10,3 +10,10 @@ VALUES
 ('Jane'),
 ('Bob'),
 ('Paul');
+
+INSERT INTO tasks_assignees(TASK_ID, ASSIGNEE_ID)
+VALUES
+(1, 1),
+(2, 2),
+(2, 3),
+(3, 2);

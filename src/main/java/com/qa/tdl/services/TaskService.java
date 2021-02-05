@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.qa.tdl.persistance.domain.TaskDomain;
+import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.dtos.TaskDTO;
 import com.qa.tdl.persistance.repos.TaskRepo;
 
@@ -28,7 +28,12 @@ public class TaskService {
 	}
 	
 	private TaskDTO mapToDto(TaskDomain model) {
-		return this.mapper.map(model, TaskDTO.class);
+		TaskDTO dto = this.mapper.map(model, TaskDTO.class);
+		dto.setAssignees(model.getAssignees()
+								.stream()
+								.map(s -> this.mapper.map(s, AssigneeDTO.class))
+								.collect(Collectors.toSet()));
+		return dto;
 	}
 	
 	// POST
@@ -41,7 +46,9 @@ public class TaskService {
 
 	// GET
 	public List<TaskDTO> readAll() {
-		return this.repo.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+		return this.repo.findAll().stream()
+				.map(this::mapToDto)
+				.collect(Collectors.toList());
 	}
 
 	public TaskDTO readTask(long id) {
@@ -50,13 +57,16 @@ public class TaskService {
 
 	// DELETE
 	public boolean delete(long id) {
-		try {
+		Optional<TaskDomain> existingOptional = this.repo.findById(id);
+		
+		if (existingOptional.isPresent()) {
+			TaskDomain existing = existingOptional.get();
+			existing.emptyAssignees(); // so that any of the assigned don't get deleted as well when deleteById gets called
 			this.repo.deleteById(id);
 			return !(this.repo.existsById(id));
-		} catch(EmptyResultDataAccessException e) {
-			e.printStackTrace();
-			return false;
 		}
+		
+		return false;
 	}
 
 	// PUT
@@ -66,7 +76,6 @@ public class TaskService {
 
 		existing.setTitle(model.getTitle());
 		existing.setCompleted(model.getCompleted());
-//		existing.setDateTimeSet(model.getDateTimeSet());
 
 		return this.mapToDto(this.repo.save(existing));
 	}
