@@ -24,7 +24,6 @@ public class TaskServiceUnitTest {
 	@MockBean
 	private TaskRepo repo;
 	
-	// only testing service - injecting this will complicate and defeat the purpose
 	@MockBean
 	private ModelMapper mapper;
 	
@@ -37,7 +36,6 @@ public class TaskServiceUnitTest {
 		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), TEST_TASK.getDateTimeSet());
 		
 		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK);
-		// wouldn't mocking this mean line 40 would always returns TEST_DTO?
 		Mockito.when(this.mapper.map(TEST_TASK, TaskDTO.class)).thenReturn(TEST_DTO);
 		
 		TaskDTO result = this.service.create(TEST_TASK);
