@@ -61,6 +61,11 @@ public class TaskController {
 		return new ResponseEntity<>(this.service.addAssignee(id, assigneeId), HttpStatus.ACCEPTED);
 	}
 	
+	@PutMapping("/update/{id}/remove-assignee")
+	public ResponseEntity<TaskDTO> removeAssignee(@RequestParam("assignee_id") int assigneeId, @PathVariable int id) {
+		return new ResponseEntity<>(this.service.removeAssignee(id, assigneeId), HttpStatus.ACCEPTED);
+	}
+	
 	// DELETE
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Object> removeTask(@PathVariable long id) {
