@@ -1,5 +1,7 @@
 package com.qa.tdl.services;
 
+import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,12 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.qa.tdl.persistance.domain.AssigneeDomain;
+import com.qa.tdl.persistance.domain.TaskDomain;
 import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.repos.AssigneeRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"classpath:schema-test.sql", "classpath:data-test.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@ActiveProfiles(profiles = "test")
 public class AssigneeServiceUnitTest {
 	
 	@MockBean
@@ -95,15 +103,19 @@ public class AssigneeServiceUnitTest {
 	
 	@Test
 	public void deleteTest() {
+		Mockito.when(this.repo.findById(1L)).thenReturn(
+				Optional.of(new AssigneeDomain(1L, "Jane", new HashSet<>())));
+		
 		this.service.delete(1L);
+		
 		Mockito.verify(this.repo, Mockito.times(1)).deleteById(1L);
 	}
 	
 	@Test
 	public void updateTest() {
 		Long id = 1L;
-		AssigneeDomain TEST_ASSIGNEE = new AssigneeDomain(id, "Jane");
-		AssigneeDomain TEST_ASSIGNEE_UPDATE = new AssigneeDomain(id, "Travis");
+		AssigneeDomain TEST_ASSIGNEE = new AssigneeDomain(id, "Jane", null);
+		AssigneeDomain TEST_ASSIGNEE_UPDATE = new AssigneeDomain(id, "Travis", null);
 		Optional<AssigneeDomain> TEST_OPTIONAL = Optional.of(TEST_ASSIGNEE);
 		AssigneeDTO TEST_DTO_UPDATE = new AssigneeDTO(TEST_ASSIGNEE_UPDATE.getId(),TEST_ASSIGNEE_UPDATE.getName());
 	

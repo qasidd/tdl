@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.qa.tdl.persistance.domain.AssigneeDomain;
@@ -36,7 +35,9 @@ public class AssigneeService {
 
 	// GET
 	public List<AssigneeDTO> readAll() {
-		return this.repo.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+		return this.repo.findAll().stream()
+				.map(this::mapToDto)
+				.collect(Collectors.toList());
 	}
 
 	public AssigneeDTO readAssignee(long id) {
@@ -45,13 +46,16 @@ public class AssigneeService {
 
 	// DELETE
 	public boolean delete(long id) {
-		try {
+		Optional<AssigneeDomain> existingOptional = this.repo.findById(id);
+		
+		if (existingOptional.isPresent()) {
+			AssigneeDomain existing = existingOptional.get();
+			existing.removeTasks();
 			this.repo.deleteById(id);
 			return !(this.repo.existsById(id));
-		} catch(EmptyResultDataAccessException e) {
-			e.printStackTrace();
-			return false;
 		}
+		
+		return false;
 	}
 
 	// PUT

@@ -3,7 +3,6 @@ package com.qa.tdl.persistance.dtos;
 public class AssigneeDTO {
 	
 	private Long id;
-	
 	private String name;
 
 	public AssigneeDTO() {

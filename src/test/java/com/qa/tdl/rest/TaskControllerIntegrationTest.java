@@ -2,6 +2,8 @@ package com.qa.tdl.rest;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -21,7 +23,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qa.tdl.persistance.domain.AssigneeDomain;
 import com.qa.tdl.persistance.domain.TaskDomain;
+import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.dtos.TaskDTO;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -43,7 +47,12 @@ public class TaskControllerIntegrationTest {
 	private final String URL = "http://localhost:8080/task/";
 	
 	private TaskDTO mapToDto(TaskDomain model) {
-		return this.mapper.map(model, TaskDTO.class);
+		TaskDTO dto = this.mapper.map(model, TaskDTO.class);
+		dto.setAssignees(model.getAssignees()
+								.stream()
+								.map(s -> this.mapper.map(s, AssigneeDTO.class))
+								.collect(Collectors.toSet()));
+		return dto;
 	}
 	
 	// GET
@@ -54,7 +63,7 @@ public class TaskControllerIntegrationTest {
 	@Test
 	public void readTask() throws Exception {
 		// resources
-		TaskDTO expectedResult = new TaskDTO(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"));
+		TaskDTO expectedResult = new TaskDTO(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDTO(1L, "Jane")));
 		
 		// set up request
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
@@ -96,7 +105,7 @@ public class TaskControllerIntegrationTest {
 	@Test
 	public void updateTask() throws Exception {
 		// resources
-		TaskDomain contentBody = new TaskDomain(2L, "Food shopping", false, Timestamp.valueOf("2021-01-21 13:00:00"));
+		TaskDomain contentBody = new TaskDomain(2L, "Food shopping", false, Timestamp.valueOf("2021-01-21 13:00:00"), Set.of(new AssigneeDomain(2L, "Bob", null), new AssigneeDomain(3L, "Paul", null)));
 		TaskDTO expectedResult = this.mapToDto(contentBody);
 		
 		// set up request

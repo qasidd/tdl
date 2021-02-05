@@ -2,8 +2,10 @@ package com.qa.tdl.services;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,12 +15,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.qa.tdl.persistance.domain.AssigneeDomain;
 import com.qa.tdl.persistance.domain.TaskDomain;
+import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.dtos.TaskDTO;
 import com.qa.tdl.persistance.repos.TaskRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"classpath:schema-test.sql", "classpath:data-test.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@ActiveProfiles(profiles = "test")
 public class TaskServiceUnitTest {
 	
 	@MockBean
@@ -33,7 +42,7 @@ public class TaskServiceUnitTest {
 	@Test
 	public void createTest() {
 		TaskDomain TEST_TASK = new TaskDomain(5L, "Food shopping", false, Timestamp.from(Instant.now()));
-		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), TEST_TASK.getDateTimeSet());
+		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), TEST_TASK.getDateTimeSet(), null);
 		
 		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK);
 		Mockito.when(this.mapper.map(TEST_TASK, TaskDTO.class)).thenReturn(TEST_DTO);
@@ -51,9 +60,9 @@ public class TaskServiceUnitTest {
 	@Test
 	public void readTaskTest() {
 		Long id = 1L;
-		TaskDomain TEST_TASK = new TaskDomain(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"));
+		TaskDomain TEST_TASK = new TaskDomain(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
 		Optional<TaskDomain> TEST_OPTIONAL = Optional.of(TEST_TASK);
-		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), TEST_TASK.getDateTimeSet());
+		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), TEST_TASK.getDateTimeSet(), Set.of(new AssigneeDTO(1L, "Jane")));
 		
 		Mockito.when(this.repo.findById(id)).thenReturn(TEST_OPTIONAL);
 		Mockito.when(this.mapper.map(TEST_TASK, TaskDTO.class)).thenReturn(TEST_DTO);
@@ -71,19 +80,22 @@ public class TaskServiceUnitTest {
 	
 	@Test
 	public void readAllTest() {
-		TaskDomain TEST_TASK1 = new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"));
-		TaskDomain TEST_TASK2 = new TaskDomain(2L, "Make coffee", false, Timestamp.valueOf("2021-01-21 13:00:00"));
-		TaskDomain TEST_TASK3 = new TaskDomain(3L, "Take out bins", true, Timestamp.valueOf("2020-12-30 19:00:00"));
-		TaskDTO TEST_DTO1 = new TaskDTO(TEST_TASK1.getId(), TEST_TASK1.getTitle(), TEST_TASK1.getCompleted(), TEST_TASK1.getDateTimeSet());
-		TaskDTO TEST_DTO2 = new TaskDTO(TEST_TASK2.getId(), TEST_TASK2.getTitle(), TEST_TASK2.getCompleted(), TEST_TASK2.getDateTimeSet());
-		TaskDTO TEST_DTO3 = new TaskDTO(TEST_TASK3.getId(), TEST_TASK3.getTitle(), TEST_TASK3.getCompleted(), TEST_TASK3.getDateTimeSet());
-		List<TaskDomain> TASK_LIST = List.of(TEST_TASK1, TEST_TASK2, TEST_TASK3);
-		List<TaskDTO> DTO_LIST = List.of(TEST_DTO1, TEST_DTO2, TEST_DTO3);
+		TaskDomain TEST_TASK1 = new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
+		TaskDomain TEST_TASK2 = new TaskDomain(2L, "Make coffee", false, Timestamp.valueOf("2021-01-21 13:00:00"), Set.of(new AssigneeDomain(2L, "Bob", null), new AssigneeDomain(3L, "Paul", null)));
+		TaskDomain TEST_TASK3 = new TaskDomain(3L, "Take out bins", true, Timestamp.valueOf("2020-12-30 19:00:00"), Set.of(new AssigneeDomain(3L, "Paul", null)));
+		TaskDomain TEST_TASK4 = new TaskDomain(4L, "Buy masks", false, Timestamp.valueOf("2021-02-01 03:30:00"));
+		TaskDTO TEST_DTO1 = new TaskDTO(TEST_TASK1.getId(), TEST_TASK1.getTitle(), TEST_TASK1.getCompleted(), TEST_TASK1.getDateTimeSet(), Set.of(new AssigneeDTO(1L, "Jane")));
+		TaskDTO TEST_DTO2 = new TaskDTO(TEST_TASK2.getId(), TEST_TASK2.getTitle(), TEST_TASK2.getCompleted(), TEST_TASK2.getDateTimeSet(), Set.of(new AssigneeDTO(2L, "Bob"), new AssigneeDTO(3L, "Paul")));
+		TaskDTO TEST_DTO3 = new TaskDTO(TEST_TASK3.getId(), TEST_TASK3.getTitle(), TEST_TASK3.getCompleted(), TEST_TASK3.getDateTimeSet(), Set.of(new AssigneeDTO(3L, "Paul")));
+		TaskDTO TEST_DTO4 = new TaskDTO(TEST_TASK4.getId(), TEST_TASK3.getTitle(), TEST_TASK4.getCompleted(), TEST_TASK4.getDateTimeSet(), Set.of());
+		List<TaskDomain> TASK_LIST = List.of(TEST_TASK1, TEST_TASK2, TEST_TASK3, TEST_TASK4);
+		List<TaskDTO> DTO_LIST = List.of(TEST_DTO1, TEST_DTO2, TEST_DTO3, TEST_DTO4);
 		
 		Mockito.when(this.repo.findAll()).thenReturn(TASK_LIST);
 		Mockito.when(this.mapper.map(TEST_TASK1, TaskDTO.class)).thenReturn(TEST_DTO1);
 		Mockito.when(this.mapper.map(TEST_TASK2, TaskDTO.class)).thenReturn(TEST_DTO2);
 		Mockito.when(this.mapper.map(TEST_TASK3, TaskDTO.class)).thenReturn(TEST_DTO3);
+		Mockito.when(this.mapper.map(TEST_TASK4, TaskDTO.class)).thenReturn(TEST_DTO4);
 		
 		List<TaskDTO> result = this.service.readAll();
 		
@@ -97,17 +109,21 @@ public class TaskServiceUnitTest {
 	
 	@Test
 	public void deleteTest() {
+		Mockito.when(this.repo.findById(1L)).thenReturn(
+				Optional.of(new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), new HashSet<>())));
+		
 		this.service.delete(1L);
+
 		Mockito.verify(this.repo, Mockito.times(1)).deleteById(1L);
 	}
 	
 	@Test
 	public void updateTest() {
 		Long id = 1L;
-		TaskDomain TEST_TASK = new TaskDomain(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"));
-		TaskDomain TEST_TASK_UPDATE = new TaskDomain(id, "Buy pens", false, Timestamp.from(Instant.now()));
+		TaskDomain TEST_TASK = new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
+		TaskDomain TEST_TASK_UPDATE = new TaskDomain(id, "Buy pens", false, Timestamp.from(Instant.now()), Set.of(new AssigneeDomain(1L, "Jane", null)));
 		Optional<TaskDomain> TEST_OPTIONAL = Optional.of(TEST_TASK);
-		TaskDTO TEST_DTO_UPDATE = new TaskDTO(TEST_TASK_UPDATE.getId(),TEST_TASK_UPDATE.getTitle(), TEST_TASK_UPDATE.getCompleted(), TEST_TASK_UPDATE.getDateTimeSet());
+		TaskDTO TEST_DTO_UPDATE = new TaskDTO(TEST_TASK_UPDATE.getId(),TEST_TASK_UPDATE.getTitle(), TEST_TASK_UPDATE.getCompleted(), TEST_TASK_UPDATE.getDateTimeSet(), Set.of(new AssigneeDTO(1L, "Jane")));
 	
 		Mockito.when(this.repo.findById(id)).thenReturn(TEST_OPTIONAL);
 		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK_UPDATE);

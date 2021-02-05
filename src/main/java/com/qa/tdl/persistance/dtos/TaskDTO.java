@@ -1,6 +1,7 @@
 package com.qa.tdl.persistance.dtos;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 public class TaskDTO {
 
@@ -8,17 +9,19 @@ public class TaskDTO {
 	private String title;
 	private Boolean completed;
 	private Timestamp dateTimeSet;
+	private Set<AssigneeDTO> assignees;
 
 	public TaskDTO() {
 		super();
 	}
 
-	public TaskDTO(Long id, String title, Boolean completed, Timestamp dateTimeSet) {
+	public TaskDTO(Long id, String title, Boolean completed, Timestamp dateTimeSet, Set<AssigneeDTO> assignees) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.completed = completed;
 		this.dateTimeSet = dateTimeSet;
+		this.assignees = assignees;
 	}
 
 	public Long getId() {
@@ -51,6 +54,14 @@ public class TaskDTO {
 
 	public void setDateTimeSet(Timestamp dateTimeSet) {
 		this.dateTimeSet = dateTimeSet;
+	}
+	
+	public Set<AssigneeDTO> getAssignees() {
+		return assignees;
+	}
+	
+	public void setAssignees(Set<AssigneeDTO> assignees) {
+		this.assignees = assignees;
 	}
 
 	@Override
