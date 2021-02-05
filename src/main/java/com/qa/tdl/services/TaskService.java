@@ -10,7 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qa.tdl.persistance.domain.AssigneeDomain;
 import com.qa.tdl.persistance.domain.TaskDomain;
 import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.dtos.TaskDTO;
@@ -86,6 +85,15 @@ public class TaskService {
 		TaskDomain existing = oc.orElseThrow();
 
 		existing.getAssignees().add(this.assigneeRepo.findById(assigneeId).orElseThrow());
+		
+		return this.mapToDto(this.repo.save(existing));
+	}
+	
+	public TaskDTO removeAssignee(long id, long assigneeId) {
+		Optional<TaskDomain> oc = this.repo.findById(id);
+		TaskDomain existing = oc.orElseThrow();
+
+		existing.getAssignees().remove(this.assigneeRepo.findById(assigneeId).orElseThrow());
 		
 		return this.mapToDto(this.repo.save(existing));
 	}

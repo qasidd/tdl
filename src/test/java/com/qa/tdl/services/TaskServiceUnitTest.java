@@ -173,4 +173,38 @@ public class TaskServiceUnitTest {
 		Mockito.verify(this.assigneeRepo, Mockito.times(1)).findById(assigneeId);
 		Mockito.verify(this.repo, Mockito.times(1)).save(Mockito.any(TaskDomain.class));
 	}
+	
+	@Test
+	public void removeAssigneeTest() {
+		Long id = 2L;
+		Long assigneeIdRemove = 3L;
+		
+		AssigneeDomain TEST_ASSIGNEE_ONE = new AssigneeDomain(2L, "Bob", null);
+		AssigneeDomain TEST_ASSIGNEE_TWO = new AssigneeDomain(assigneeIdRemove, "Paul", null);
+		Optional<AssigneeDomain> TEST_ASSIGNEE_OPTIONAL = Optional.of(TEST_ASSIGNEE_TWO);
+		
+		Set<AssigneeDomain> TEST_ASSIGNEES = new HashSet<>();
+		TEST_ASSIGNEES.add(TEST_ASSIGNEE_ONE);
+		TEST_ASSIGNEES.add(TEST_ASSIGNEE_TWO);
+		TaskDomain TEST_TASK = new TaskDomain(id, "Make coffee", false, Timestamp.valueOf("2021-01-21 13:00:00"), TEST_ASSIGNEES);
+		TaskDomain TEST_TASK_UPDATE = new TaskDomain(id, "Make Coffee", false, Timestamp.valueOf("2021-02-01 03:30:00"), Set.of(TEST_ASSIGNEE_ONE));
+		Optional<TaskDomain> TEST_OPTIONAL = Optional.of(TEST_TASK);
+		TaskDTO TEST_DTO_UPDATE = new TaskDTO(TEST_TASK_UPDATE.getId(),TEST_TASK_UPDATE.getTitle(), TEST_TASK_UPDATE.getCompleted(), TEST_TASK_UPDATE.getDateTimeSet(), Set.of(new AssigneeDTO(2L, "Bob")));
+	
+		Mockito.when(this.repo.findById(id)).thenReturn(TEST_OPTIONAL);
+		Mockito.when(this.assigneeRepo.findById(assigneeIdRemove)).thenReturn(TEST_ASSIGNEE_OPTIONAL);
+		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK_UPDATE);
+		Mockito.when(this.mapper.map(TEST_TASK_UPDATE, TaskDTO.class)).thenReturn(TEST_DTO_UPDATE);
+		
+		TaskDTO result = this.service.addAssignee(id, assigneeIdRemove);
+		
+		Assertions.assertThat(result).isNotNull();
+		Assertions.assertThat(result)
+			.usingRecursiveComparison()
+			.isEqualTo(TEST_DTO_UPDATE);
+		
+		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
+		Mockito.verify(this.assigneeRepo, Mockito.times(1)).findById(assigneeIdRemove);
+		Mockito.verify(this.repo, Mockito.times(1)).save(Mockito.any(TaskDomain.class));
+	}
 }
