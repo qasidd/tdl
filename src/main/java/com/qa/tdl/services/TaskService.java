@@ -1,5 +1,7 @@
 package com.qa.tdl.services;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +33,9 @@ public class TaskService {
 	
 	// POST
 	public TaskDTO create(TaskDomain model) {
-		return this.mapToDto(this.repo.save(model));
+//		return this.mapToDto(this.repo.save(model));
+		return this.mapToDto(this.repo.save
+				(new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))));
 	}
 
 	// GET
@@ -61,7 +65,7 @@ public class TaskService {
 
 		existing.setTitle(model.getTitle());
 		existing.setCompleted(model.getCompleted());
-		existing.setDateTimeSet(model.getDateTimeSet());
+//		existing.setDateTimeSet(model.getDateTimeSet());
 
 		return this.mapToDto(this.repo.save(existing));
 	}

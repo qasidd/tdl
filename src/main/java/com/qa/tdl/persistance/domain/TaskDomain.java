@@ -35,6 +35,13 @@ public class TaskDomain {
 		this.completed = completed;
 		this.dateTimeSet = dateTimeSet;
 	}
+	
+	public TaskDomain(String title, Boolean completed, Timestamp dateTimeSet) {
+		super();
+		this.title = title;
+		this.completed = completed;
+		this.dateTimeSet = dateTimeSet;
+	}
 
 	public Long getId() {
 		return id;
