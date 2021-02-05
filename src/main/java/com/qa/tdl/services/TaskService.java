@@ -10,45 +10,45 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qa.tdl.persistance.domain.AssigneeDomain;
 import com.qa.tdl.persistance.domain.TaskDomain;
 import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.dtos.TaskDTO;
+import com.qa.tdl.persistance.repos.AssigneeRepo;
 import com.qa.tdl.persistance.repos.TaskRepo;
 
 @Service
 public class TaskService {
 
 	private TaskRepo repo;
+	private AssigneeRepo assigneeRepo;
 	private ModelMapper mapper;
-	
+
 	@Autowired
-	public TaskService(TaskRepo repo, ModelMapper mapper) {
+	public TaskService(TaskRepo repo, AssigneeRepo assigneeRepo, ModelMapper mapper) {
 		this.repo = repo;
+		this.assigneeRepo = assigneeRepo;
 		this.mapper = mapper;
 	}
-	
+
 	private TaskDTO mapToDto(TaskDomain model) {
 		TaskDTO dto = this.mapper.map(model, TaskDTO.class);
-		dto.setAssignees(model.getAssignees()
-								.stream()
-								.map(s -> this.mapper.map(s, AssigneeDTO.class))
-								.collect(Collectors.toSet()));
+		dto.setAssignees(model.getAssignees().stream().map(s -> this.mapper.map(s, AssigneeDTO.class))
+				.collect(Collectors.toSet()));
 		return dto;
 	}
-	
+
 	// POST
 	public TaskDTO create(TaskDomain model) {
-		return model.getDateTimeSet() == null ?
-			this.mapToDto(this.repo.save
-				(new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()), null)))
-			: this.mapToDto(this.repo.save(model));
+		return model.getDateTimeSet() == null
+				? this.mapToDto(this.repo.save(
+						new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()), null)))
+				: this.mapToDto(this.repo.save(model));
 	}
 
 	// GET
 	public List<TaskDTO> readAll() {
-		return this.repo.findAll().stream()
-				.map(this::mapToDto)
-				.collect(Collectors.toList());
+		return this.repo.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
 	}
 
 	public TaskDTO readTask(long id) {
@@ -58,14 +58,15 @@ public class TaskService {
 	// DELETE
 	public boolean delete(long id) {
 		Optional<TaskDomain> existingOptional = this.repo.findById(id);
-		
+
 		if (existingOptional.isPresent()) {
 			TaskDomain existing = existingOptional.get();
-			existing.emptyAssignees(); // so that any of the assigned don't get deleted as well when deleteById gets called
+			existing.emptyAssignees(); // so that any of the assigned don't get deleted as well when deleteById gets
+										// called
 			this.repo.deleteById(id);
 			return !(this.repo.existsById(id));
 		}
-		
+
 		return false;
 	}
 
@@ -79,5 +80,14 @@ public class TaskService {
 
 		return this.mapToDto(this.repo.save(existing));
 	}
-	
+
+	public TaskDTO addAssignee(long id, long assigneeId) {
+		Optional<TaskDomain> oc = this.repo.findById(id);
+		TaskDomain existing = oc.orElseThrow();
+
+		existing.getAssignees().add(this.assigneeRepo.findById(assigneeId).orElseThrow());
+		
+		return this.mapToDto(this.repo.save(existing));
+	}
+
 }

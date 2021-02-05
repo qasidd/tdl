@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.tdl.persistance.domain.TaskDomain;
@@ -46,13 +47,18 @@ public class TaskController {
 	// POST
 	@PostMapping("/create")
 	public ResponseEntity<TaskDTO> create(@RequestBody TaskDomain model) {
-		return new ResponseEntity<TaskDTO>(this.service.create(model), HttpStatus.CREATED);
+		return new ResponseEntity<>(this.service.create(model), HttpStatus.CREATED);
 	}
 	
 	// PUT
 	@PutMapping("/update")
 	public ResponseEntity<TaskDTO> updateTask(@PathParam("id") int id, @RequestBody TaskDomain model) {
 		return new ResponseEntity<>(this.service.update(id, model), HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping("/update/{id}/add-assignee")
+	public ResponseEntity<TaskDTO> addAssignee(@RequestParam("assignee_id") int assigneeId, @PathVariable int id) {
+		return new ResponseEntity<>(this.service.addAssignee(id, assigneeId), HttpStatus.ACCEPTED);
 	}
 	
 	// DELETE

@@ -1,6 +1,5 @@
 package com.qa.tdl.services;
 
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +17,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.qa.tdl.persistance.domain.AssigneeDomain;
-import com.qa.tdl.persistance.domain.TaskDomain;
 import com.qa.tdl.persistance.dtos.AssigneeDTO;
 import com.qa.tdl.persistance.repos.AssigneeRepo;
 
