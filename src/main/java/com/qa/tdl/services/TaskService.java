@@ -33,9 +33,10 @@ public class TaskService {
 	
 	// POST
 	public TaskDTO create(TaskDomain model) {
-//		return this.mapToDto(this.repo.save(model));
-		return this.mapToDto(this.repo.save
-				(new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))));
+		return model.getDateTimeSet() == null ?
+			this.mapToDto(this.repo.save
+				(new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))))
+			: this.mapToDto(this.repo.save(model));
 	}
 
 	// GET
