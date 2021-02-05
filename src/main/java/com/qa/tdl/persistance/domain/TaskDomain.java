@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class TaskEntity {
+public class TaskDomain {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +24,11 @@ public class TaskEntity {
 	@Column(nullable = false)
 	private Timestamp dateTimeSet;
 
-	public TaskEntity() {
+	public TaskDomain() {
 		super();
 	}
 
-	public TaskEntity(Long id, String title, Boolean completed, Timestamp dateTimeSet) {
+	public TaskDomain(Long id, String title, Boolean completed, Timestamp dateTimeSet) {
 		super();
 		this.id = id;
 		this.title = title;
