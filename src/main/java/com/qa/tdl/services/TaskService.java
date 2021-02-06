@@ -84,7 +84,7 @@ public class TaskService {
 		Optional<TaskDomain> oc = this.repo.findById(id);
 		TaskDomain existing = oc.orElseThrow();
 
-		existing.getAssignees().add(this.assigneeRepo.findById(assigneeId).orElseThrow());
+		existing.addAssignee(this.assigneeRepo.findById(assigneeId).orElseThrow());
 		
 		return this.mapToDto(this.repo.save(existing));
 	}
@@ -93,7 +93,7 @@ public class TaskService {
 		Optional<TaskDomain> oc = this.repo.findById(id);
 		TaskDomain existing = oc.orElseThrow();
 
-		existing.getAssignees().remove(this.assigneeRepo.findById(assigneeId).orElseThrow());
+		existing.removeAssignee(this.assigneeRepo.findById(assigneeId).orElseThrow());
 		
 		return this.mapToDto(this.repo.save(existing));
 	}

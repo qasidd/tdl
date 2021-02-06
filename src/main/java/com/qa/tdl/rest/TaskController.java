@@ -68,7 +68,7 @@ public class TaskController {
 	
 	// DELETE
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> removeTask(@PathVariable long id) {
+	public ResponseEntity<Object> removeTask(@PathVariable int id) {
 		return new ResponseEntity<>(this.service.delete(id) ? HttpStatus.NO_CONTENT : HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

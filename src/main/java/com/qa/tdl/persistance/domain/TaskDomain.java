@@ -116,6 +116,10 @@ public class TaskDomain {
 		this.assignees = assignees;
 	}
 	
+	public void addAssignee(AssigneeDomain assignee) {
+		this.assignees.add(assignee);
+	}
+	
 	public void removeAssignee(AssigneeDomain assignee) {
 		this.assignees.remove(assignee);
 	}
