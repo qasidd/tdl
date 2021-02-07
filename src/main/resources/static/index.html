@@ -51,11 +51,11 @@
 
                     <div class="col-6 col-lg-12">
                         <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
-                        data-bs-target="#newAssigneeModal">New assignee</button>
+                            data-bs-target="#newAssigneeModal">New assignee</button>
 
                         <!-- New assignee modal -->
-                        <div class="modal fade" id="newAssigneeModal" tabindex="-1" aria-labelledby="newAssigneeModalLabel"
-                            aria-hidden="true">
+                        <div class="modal fade" id="newAssigneeModal" tabindex="-1"
+                            aria-labelledby="newAssigneeModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -66,7 +66,7 @@
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form>
-                                                <label for="newAssigneeTitle" class="form-label">Name:</label>
+                                                <label for="newAssigneeTitle" class="form-label">Name</label>
                                                 <input type="text" class="form-control" id="newAssigneeTitle">
                                             </form>
                                         </div>
@@ -84,30 +84,38 @@
 
                     <div class="col-6 col-lg-12">
                         <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
-                        data-bs-target="#editAssigneeModal">Edit assignees</button>
+                            data-bs-target="#editAssigneeModal">Edit assignee</button>
 
                         <!-- edit assignee modal -->
-                        <div class="modal fade" id="editAssigneeModal" tabindex="-1" aria-labelledby="editAssigneeModalLabel"
-                            aria-hidden="true">
+                        <div class="modal fade" id="editAssigneeModal" tabindex="-1"
+                            aria-labelledby="editAssigneeModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="editAssigneeModalLabel">Edit assignees</h5>
+                                        <h5 class="modal-title" id="editAssigneeModalLabel">Edit assignee</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form>
-                                                <label for="editAssigneeTitle" class="form-label">Name:</label>
-                                                <input type="text" class="form-control" id="editAssigneeTitle">
+                                                <div class="mb-3">
+                                                    <label for="editAssigneeSelect" class="form-label">Assignee</label>
+                                                    <select id="editAssigneeSelect" class="form-select">
+                                                        <option>Jane</option>
+                                                        <option>Bob</option>
+                                                        <option>Paul</option>
+                                                    </select>
+                                                </div>
+                                                <label for="editAssigneeTitle" class="form-label mt-2">Name</label>
+                                                <input type="text" class="form-control " id="editAssigneeTitle">
                                             </form>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
+                                        <button type="button" class="btn btn-primary">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -119,113 +127,185 @@
             </div>
             <div class="col-lg-8">
                 <div class="container-md tdl">
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                    aria-controls="flush-collapseOne">
-                                    <div class="d-flex flex-column text-start">
-                                        <span class="task-title">Do laundry</span>
-                                        <span class="assigned-to">Assigned to: Jane</span>
-                                    </div>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex flex-column text-start">
-                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
-                                    <div class="task-edit-buttons d-flex justify-content-between">
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
-                                            task</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
-                                            assignee</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                    aria-controls="flush-collapseTwo">
-                                    <div class="d-flex flex-column text-start">
-                                        <span class="task-title">Make coffee</span>
-                                        <span class="assigned-to">Assigned to: Bob, Paul</span>
-                                    </div>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex flex-column text-start">
-                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
-                                    <div class="task-edit-buttons d-flex justify-content-between">
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
-                                            task</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
-                                            assignee</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                    <div class="d-flex flex-row-reverse mb-3">
+                        <button class="btn btn-dark">Reset</button>
+                    </div>
+                    <div class="row">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                        aria-controls="flush-collapseOne">
+                                        <div class="d-flex flex-column text-start">
+                                            <span class="task-title">Do laundry</span>
+                                            <span class="assigned-to">Assigned to: Jane</span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body d-flex flex-column text-start">
+                                        <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                        <div class="task-edit-buttons d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
+                                                task</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
+                                                assignee</button>
+                                            <button type="button"
+                                                class="btn btn-outline-primary btn-sm">Completed?</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                    aria-controls="flush-collapseThree">
-                                    Buy masks
-                                </button>
-                            </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex flex-column text-start">
-                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
-                                    <div class="task-edit-buttons d-flex justify-content-between">
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
-                                            task</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
-                                            assignee</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                        aria-controls="flush-collapseTwo">
+                                        <div class="d-flex flex-column text-start">
+                                            <span class="task-title">Make coffee</span>
+                                            <span class="assigned-to">Assigned to: Bob, Paul</span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body d-flex flex-column text-start">
+                                        <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                        <div class="task-edit-buttons d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
+                                                task</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
+                                                assignee</button>
+                                            <button type="button"
+                                                class="btn btn-outline-primary btn-sm">Completed?</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseFour" aria-expanded="false"
-                                    aria-controls="flush-collapseFour">
-                                    <div class="d-flex flex-column text-start">
-                                        <span class="task-title">Take out bins</span>
-                                        <span class="assigned-to">Assigned to: Bob</span>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                        aria-controls="flush-collapseThree">
+                                        Buy masks
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body d-flex flex-column text-start">
+                                        <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                        <div class="task-edit-buttons d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
+                                                task</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
+                                                assignee</button>
+                                            <button type="button"
+                                                class="btn btn-outline-primary btn-sm">Completed?</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </div>
                                     </div>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFour" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex flex-column text-start">
-                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
-                                    <div class="task-edit-buttons d-flex justify-content-between">
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
-                                            task</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
-                                            assignee</button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                        aria-controls="flush-collapseFour">
+                                        <div class="d-flex flex-column text-start">
+                                            <span class="task-title">Take out bins</span>
+                                            <span class="assigned-to">Assigned to: Bob</span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFour" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body d-flex flex-column text-start">
+                                        <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                        <div class="task-edit-buttons d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
+                                                task</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
+                                                assignee</button>
+                                            <button type="button"
+                                                class="btn btn-outline-primary btn-sm">Completed?</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- edit task modal -->
+                <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editTaskModalLabel">Edit task</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form>
+                                        <input type="text" class="form-control " id="editTaskTitle">
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- add assignee to task modal -->
+                <div class="modal fade" id="addAssigneeToTaskModal" tabindex="-1"
+                    aria-labelledby="addAssigneeToTaskModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAssigneeToTaskModalLabel">Add assignee to task</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form>
+                                        <label for="editAssigneeSelect" class="form-label">Assignee</label>
+                                        <select id="editAssigneeSelect" class="form-select">
+                                            <option>Jane</option>
+                                            <option>Bob</option>
+                                            <option>Paul</option>
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
