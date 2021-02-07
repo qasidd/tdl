@@ -136,7 +136,7 @@ const createAssignee = () => {
         .then(response => response.json())
         .then(model => { 
             console.log(model);
-            populateAssignees(); 
+            populateAssignees();
         })
         .catch(err => console.error(`error ${err}`));
 };
@@ -185,3 +185,5 @@ const refresh = () => {
     readAllTasks();
     populateAssignees();
 };
+
+refresh();
