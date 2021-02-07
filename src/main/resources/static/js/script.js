@@ -2,6 +2,8 @@
 
 // Variables
 
+const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
+
 const _newTaskTitle = document.querySelector("#newTaskTitle");
 
 const _newAssigneeName = document.querySelector("#newAssigneeName");
@@ -12,13 +14,98 @@ const _editAssigneeSelect = document.querySelector("#editAssigneeSelect");
 
 // Task
 
+// <div class="accordion-item">
+//     <h2 class="accordion-header" id="flush-headingOne">
+//         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+//             data-bs-target="#flush-collapseOne" aria-expanded="false"
+//             aria-controls="flush-collapseOne">
+//             <div class="d-flex flex-column text-start">
+//                 <span class="task-title">Do laundry</span>
+//                 <span class="assigned-to">Assigned to: Jane</span>
+//             </div>
+//         </button>
+//     </h2>
+//     <div id="flush-collapseOne" class="accordion-collapse collapse"
+//         aria-labelledby="flush-headingOne" data-bs-parent="#tdlAccordionFlush">
+//         <div class="accordion-body d-flex flex-column text-start">
+//             <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+//             <div class="task-edit-buttons d-flex justify-content-between">
+//                 <button type="button" class="btn btn-outline-primary btn-sm"
+//                     data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
+//                                                 task</button>
+//                 <button type="button" class="btn btn-outline-primary btn-sm"
+//                     data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
+//                                                 assignee</button>
+//                 <button type="button"
+//                     class="btn btn-outline-primary btn-sm">Completed?</button>
+//                 <button type="button" class="btn btn-danger">Delete</button>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+
 
 const readAllTasks = () => {
+
     fetch("http://localhost:8080/task/read/all")
         .then(response => response.json())
         .then(tasks => {
-            for (let t of tasks) {
-                console.log(t);
+            // for (let t of tasks) {
+            //     console.log(t);
+            // }
+
+            const getAssigneesFromTask = (assignees) => {
+                let result = "";
+
+                if (assignees.length > 0) {
+                    result = "Assigned to: ";
+                }
+
+                for (let i = 0; i < assignees.length; i++) {
+                    result = result + assignees[i].name;
+
+                    if (i !== assignees.length - 1) {
+                        result = result + ", "
+                    }
+                }
+
+                return result;
+            };
+
+            _tdlAccordion.innerHTML = "";
+
+            for (let i = 0; i < tasks.length; i++) {
+
+                _tdlAccordion.innerHTML = _tdlAccordion.innerHTML +
+                `<div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading${i}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapse${i}" aria-expanded="false"
+                        aria-controls="flush-collapse${i}">
+                        <div class="d-flex flex-column text-start">
+                            <span class="task-title">${tasks[i].title}</span>
+                            <span class="assigned-to">${getAssigneesFromTask(tasks[i].assignees)}</span>
+                        </div>
+                    </button>
+                </h2>
+                <div id="flush-collapse${i}" class="accordion-collapse collapse"
+                    aria-labelledby="flush-heading${i}" data-bs-parent="#tdlAccordionFlush">
+                    <div class="accordion-body d-flex flex-column text-start">
+                        <p class="date-time-stamp">Added: ${tasks[i].dateTimeSet}</p>
+                        <div class="task-edit-buttons d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
+                                                            task</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
+                                                            assignee</button>
+                            <button type="button"
+                                class="btn btn-outline-primary btn-sm">Completed?</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
             }
         })
         .catch(err => console.error(`error ${err}`));
