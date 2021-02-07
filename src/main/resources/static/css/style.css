@@ -2,7 +2,7 @@ body {
     font: 1rem/1.5 var(--bs-font-monospace);
 }
 
-.titleColumn a {
+.titleColumn .title-main-btn {
     width: 100%;
 }
 
@@ -12,6 +12,15 @@ body {
 
 .assigned-to {
     font-size: 0.6rem
+}
+
+.date-time-stamp {
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.task-edit-buttons {
+    margin-bottom: 0.3rem;
 }
 
 @media screen and (min-width: 992px) {
@@ -31,9 +40,3 @@ body {
         padding: 30px;
     }
 }
-
-
-
-/* .task-bg {
-    background-color: rgba(0,0,0,.125);
-} */

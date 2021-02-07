@@ -13,14 +13,43 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 d-flex flex-column text-center justify-content-center titleColumn">
-                <h1>To-Do List</h1>
+            <div class="col-lg-4 d-flex flex-column justify-content-center titleColumn">
+                <h1 class="text-center">To-Do List</h1>
                 <div class="row">
                     <div class="col-6 col-lg-12">
-                        <a href="" class="btn btn-light mt-3">New task</a>
+                        <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
+                            data-bs-target="#taskModal">New task</button>
+
+                        <!-- Task modal -->
+                        <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="taskModalLabel">New task</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <form>
+                                                <!-- <label for="newTaskTitle" class="form-label">Name of task:</label> -->
+                                                <input type="text" class="form-control" id="newTaskTitle">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-6 col-lg-12">
-                        <a href="" class="btn btn-light mt-3">New assignee</a>
+                        <button type="button" class="title-main-btn btn btn-light mt-3">Edit assignees</button>
                     </div>
                 </div>
             </div>
@@ -40,11 +69,16 @@
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex justify-content-around">
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Edit task</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Add assignee</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                <div class="accordion-body d-flex flex-column text-start">
+                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                    <div class="task-edit-buttons d-flex justify-content-between">
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
+                                            task</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
+                                            assignee</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -61,11 +95,16 @@
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex justify-content-around">
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Edit task</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Add assignee</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                <div class="accordion-body d-flex flex-column text-start">
+                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                    <div class="task-edit-buttons d-flex justify-content-between">
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
+                                            task</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
+                                            assignee</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +118,16 @@
                             </h2>
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex justify-content-around">
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Edit task</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Add assignee</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                <div class="accordion-body d-flex flex-column text-start">
+                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                    <div class="task-edit-buttons d-flex justify-content-between">
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
+                                            task</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
+                                            assignee</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -100,11 +144,16 @@
                             </h2>
                             <div id="flush-collapseFour" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body d-flex justify-content-around">
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Edit task</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Add assignee</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                <div class="accordion-body d-flex flex-column text-start">
+                                    <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
+                                    <div class="task-edit-buttons d-flex justify-content-between">
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Edit
+                                            task</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Add
+                                            assignee</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Completed?</button>
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +161,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
