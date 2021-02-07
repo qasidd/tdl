@@ -14,46 +14,12 @@ const _editAssigneeSelect = document.querySelector("#editAssigneeSelect");
 
 // Task
 
-// <div class="accordion-item">
-//     <h2 class="accordion-header" id="flush-headingOne">
-//         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-//             data-bs-target="#flush-collapseOne" aria-expanded="false"
-//             aria-controls="flush-collapseOne">
-//             <div class="d-flex flex-column text-start">
-//                 <span class="task-title">Do laundry</span>
-//                 <span class="assigned-to">Assigned to: Jane</span>
-//             </div>
-//         </button>
-//     </h2>
-//     <div id="flush-collapseOne" class="accordion-collapse collapse"
-//         aria-labelledby="flush-headingOne" data-bs-parent="#tdlAccordionFlush">
-//         <div class="accordion-body d-flex flex-column text-start">
-//             <p class="date-time-stamp">Added: 07/02/2021 11:30</p>
-//             <div class="task-edit-buttons d-flex justify-content-between">
-//                 <button type="button" class="btn btn-outline-primary btn-sm"
-//                     data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
-//                                                 task</button>
-//                 <button type="button" class="btn btn-outline-primary btn-sm"
-//                     data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
-//                                                 assignee</button>
-//                 <button type="button"
-//                     class="btn btn-outline-primary btn-sm">Completed?</button>
-//                 <button type="button" class="btn btn-danger">Delete</button>
-//             </div>
-//         </div>
-//     </div>
-// </div>
-
 
 const readAllTasks = () => {
 
     fetch("http://localhost:8080/task/read/all")
         .then(response => response.json())
         .then(tasks => {
-            // for (let t of tasks) {
-            //     console.log(t);
-            // }
-
             const getAssigneesFromTask = (assignees) => {
                 let result = "";
 
@@ -127,7 +93,10 @@ const createTask = () => {
         }
     })
         .then(response => response.json())
-        .then(model => console.log(model))
+        .then(model => { 
+            console.log(model); 
+            readAllTasks();
+        })
         .catch(err => console.error(`error ${err}`));
 };
 
@@ -165,7 +134,10 @@ const createAssignee = () => {
         }
     })
         .then(response => response.json())
-        .then(model => console.log(model))
+        .then(model => { 
+            console.log(model);
+            populateAssignees(); 
+        })
         .catch(err => console.error(`error ${err}`));
 };
 
@@ -185,7 +157,10 @@ const updateAssignee = () => {
         }
     })
         .then(response => response.json())
-        .then(model => console.log(model))
+        .then(model => { 
+            console.log(model)
+            populateAssignees();
+        })
         .catch(err => console.error(`error ${err}`));
 };
 
@@ -199,7 +174,10 @@ const deleteAssignee = () => {
         }
     })
         .then(response => response.json())
-        .then(model => console.log("Delete successful"))
+        .then(model => { 
+            console.log("Delete successful");
+            populateAssignees(); 
+        })
         .catch(err => console.error(`error ${err}`));
 };
 
