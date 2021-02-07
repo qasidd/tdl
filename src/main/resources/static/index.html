@@ -48,9 +48,73 @@
                         </div>
 
                     </div>
+
                     <div class="col-6 col-lg-12">
-                        <button type="button" class="title-main-btn btn btn-light mt-3">Edit assignees</button>
+                        <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
+                        data-bs-target="#newAssigneeModal">New assignee</button>
+
+                        <!-- New assignee modal -->
+                        <div class="modal fade" id="newAssigneeModal" tabindex="-1" aria-labelledby="newAssigneeModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="newAssigneeModalLabel">New assignee</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <form>
+                                                <label for="newAssigneeTitle" class="form-label">Name:</label>
+                                                <input type="text" class="form-control" id="newAssigneeTitle">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
+                    <div class="col-6 col-lg-12">
+                        <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
+                        data-bs-target="#editAssigneeModal">Edit assignees</button>
+
+                        <!-- edit assignee modal -->
+                        <div class="modal fade" id="editAssigneeModal" tabindex="-1" aria-labelledby="editAssigneeModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editAssigneeModalLabel">Edit assignees</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <form>
+                                                <label for="editAssigneeTitle" class="form-label">Name:</label>
+                                                <input type="text" class="form-control" id="editAssigneeTitle">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
             <div class="col-lg-8">
