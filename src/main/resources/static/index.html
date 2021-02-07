@@ -7,7 +7,7 @@
     <title>To-Do List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
@@ -33,15 +33,15 @@
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form>
-                                                <!-- <label for="newTaskTitle" class="form-label">Name of task:</label> -->
                                                 <input type="text" class="form-control" id="newTaskTitle">
                                             </form>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="createTask()">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -66,15 +66,16 @@
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form>
-                                                <label for="newAssigneeTitle" class="form-label">Name</label>
-                                                <input type="text" class="form-control" id="newAssigneeTitle">
+                                                <label for="newAssigneeName" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="newAssigneeName">
                                             </form>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="createAssignee()">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +87,7 @@
                         <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
                             data-bs-target="#editAssigneeModal">Edit assignee</button>
 
-                        <!-- edit assignee modal -->
+                        <!-- Edit assignee modal -->
                         <div class="modal fade" id="editAssigneeModal" tabindex="-1"
                             aria-labelledby="editAssigneeModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -98,24 +99,22 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="container-fluid">
-                                            <form>
+                                            <form name="editAssignee">
                                                 <div class="mb-3">
                                                     <label for="editAssigneeSelect" class="form-label">Assignee</label>
-                                                    <select id="editAssigneeSelect" class="form-select">
-                                                        <option>Jane</option>
-                                                        <option>Bob</option>
-                                                        <option>Paul</option>
+                                                    <select name="editAssignee" id="editAssigneeSelect" class="form-select">
                                                     </select>
                                                 </div>
-                                                <label for="editAssigneeTitle" class="form-label mt-2">Name</label>
-                                                <input type="text" class="form-control " id="editAssigneeTitle">
+                                                <label for="editAssigneeName" class="form-label mt-2">Name</label>
+                                                <input type="text" class="form-control " id="editAssigneeName">
                                             </form>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="updateAssignee()">Save</button>
+                                        <button type="button" class="btn btn-danger" onclick="deleteAssignee()">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +127,7 @@
             <div class="col-lg-8">
                 <div class="container-md tdl">
                     <div class="d-flex flex-row-reverse mb-3">
-                        <button class="btn btn-dark">Reset</button>
+                        <button class="btn btn-dark" onclick="refresh()">Refresh</button>
                     </div>
                     <div class="row">
                         <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -267,8 +266,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-primary">Save</button>
                             </div>
                         </div>
                     </div>
@@ -286,19 +285,16 @@
                             </div>
                             <div class="modal-body">
                                 <div class="container-fluid">
-                                    <form>
-                                        <label for="editAssigneeSelect" class="form-label">Assignee</label>
-                                        <select id="editAssigneeSelect" class="form-select">
-                                            <option>Jane</option>
-                                            <option>Bob</option>
-                                            <option>Paul</option>
+                                    <form name="addAssigneeToTask">
+                                        <label for="addAssigneeToTaskSelect" class="form-label">Assignee</label>
+                                        <select name="addAssigneeToTask" id="addAssigneeToTaskSelect" class="form-select">
                                         </select>
                                     </form>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-primary">Save</button>
                             </div>
                         </div>
                     </div>
@@ -314,7 +310,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
-
+    <script src="./js/script.js"></script>
 </body>
 
 </html>
