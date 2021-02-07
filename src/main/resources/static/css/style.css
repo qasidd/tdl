@@ -1,0 +1,42 @@
+body {
+    font: 1rem/1.5 var(--bs-font-monospace);
+}
+
+.titleColumn .title-main-btn {
+    width: 100%;
+}
+
+.tdl .accordion-button > .task-title {
+    margin: 0;
+}
+
+.assigned-to {
+    font-size: 0.6rem
+}
+
+.date-time-stamp {
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.task-edit-buttons {
+    margin-bottom: 0.3rem;
+}
+
+@media screen and (min-width: 992px) {
+    .titleColumn {
+        height:300px;
+        margin-top: 50px;
+        padding: 0px 50px;
+    }
+
+    .tdl {
+        padding-top: 90px;
+    }
+}
+
+@media screen and (max-width: 991.99px) {
+    .titleColumn {
+        padding: 30px;
+    }
+}
