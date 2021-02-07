@@ -1,5 +1,17 @@
+body {
+    font: 1rem/1.5 var(--bs-font-monospace);
+}
+
 .titleColumn a {
     width: 100%;
+}
+
+.tdl .accordion-button > .task-title {
+    margin: 0;
+}
+
+.assigned-to {
+    font-size: 0.6rem
 }
 
 @media screen and (min-width: 992px) {
@@ -7,13 +19,21 @@
         height:300px;
         margin-top: 50px;
         padding: 0px 50px;
-        border-right: 1px solid black;
+    }
+
+    .tdl {
+        padding-top: 90px;
     }
 }
 
 @media screen and (max-width: 991.99px) {
     .titleColumn {
         padding: 30px;
-        border-bottom: 1px solid black;
     }
 }
+
+
+
+/* .task-bg {
+    background-color: rgba(0,0,0,.125);
+} */
