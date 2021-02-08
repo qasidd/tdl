@@ -47,4 +47,8 @@ body {
     body {
         margin-top: 24px;
     }
+
+    header h1 {
+        margin-bottom: 0px;
+    }
 }

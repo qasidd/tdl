@@ -27,7 +27,7 @@
                         <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
                             data-bs-target="#taskModal">New task</button>
 
-                        <!-- Task modal -->
+                        <!-- New task modal -->
                         <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
@@ -40,6 +40,7 @@
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             <form>
+                                                <label for="newTaskTitle" class="form-label mt-2">Title</label>
                                                 <input type="text" class="form-control" id="newTaskTitle">
                                             </form>
                                         </div>
@@ -47,7 +48,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-outline-primary"
+                                        <button type="submit" class="btn btn-outline-primary"
                                             onclick="createTask()">Add</button>
                                     </div>
                                 </div>
@@ -81,7 +82,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-outline-primary"
+                                        <button type="submit" class="btn btn-outline-primary"
                                             onclick="createAssignee()">Add</button>
                                     </div>
                                 </div>
@@ -121,7 +122,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-outline-primary"
+                                        <button type="submit" class="btn btn-outline-primary"
                                             onclick="updateAssignee()">Save</button>
                                         <button type="button" class="btn btn-danger"
                                             onclick="deleteAssignee()">Delete</button>
@@ -135,7 +136,7 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <div class="container-fluid tdl">
+                <div class="tdl">
                     <div class="row">
                         <div class="accordion accordion-flush" id="tdlAccordionFlush">
                         </div>
@@ -154,15 +155,16 @@
                             </div>
                             <div class="modal-body">
                                 <div class="container-fluid">
-                                    <form>
-                                        <input type="text" class="form-control " id="editTaskTitle">
+                                    <form name="editTask">
+                                        <label for="editTaskTitle" class="form-label">Title</label>
+                                        <input name="editTask" type="text" class="form-control " id="editTaskTitle">
                                     </form>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-outline-primary">Save</button>
+                                <button type="submit" class="btn btn-outline-primary">Save</button>
                             </div>
                         </div>
                     </div>

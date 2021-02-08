@@ -3,6 +3,7 @@
 // Variables
 
 const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
+const _editTaskModal = document.querySelector("#editTaskModal");
 
 const _newTaskTitle = document.querySelector("#newTaskTitle");
 
@@ -16,7 +17,6 @@ const _editAssigneeSelect = document.querySelector("#editAssigneeSelect");
 
 
 const readAllTasks = () => {
-
     fetch("http://localhost:8080/task/read/all")
         .then(response => response.json())
         .then(tasks => {
@@ -43,13 +43,13 @@ const readAllTasks = () => {
             for (let i = 0; i < tasks.length; i++) {
 
                 _tdlAccordion.innerHTML = _tdlAccordion.innerHTML +
-                `<div class="accordion-item">
+                    `<div class="accordion-item">
                 <h2 class="accordion-header" id="flush-heading${i}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#flush-collapse${i}" aria-expanded="false"
                         aria-controls="flush-collapse${i}">
                         <div class="d-flex flex-column text-start">
-                            <span class="task-title">${tasks[i].title}</span>
+                            <span class="task-title">${getTitleFromTask(tasks[i].title, tasks[i].completed)}</span>
                             <span class="assigned-to">${getAssigneesFromTask(tasks[i].assignees)}</span>
                         </div>
                     </button>
@@ -60,14 +60,14 @@ const readAllTasks = () => {
                         <p class="date-time-stamp">Added: ${tasks[i].dateTimeSet}</p>
                         <div class="task-edit-buttons d-flex justify-content-between">
                             <button type="button" class="btn btn-outline-primary btn-sm"
-                                data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit
-                                                            task</button>
+                                data-bs-toggle="modal" data-bs-target="#editTaskModal" 
+                                data-bs-id="${tasks[i].id}">Edit task</button>
                             <button type="button" class="btn btn-outline-primary btn-sm"
-                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal">Add
-                                                            assignee</button>
+                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal" 
+                                data-bs-id="${tasks[i].id}">Add assignee</button>
                             <button type="button"
-                                class="btn btn-outline-primary btn-sm">Completed?</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                                class="btn btn-outline-primary btn-sm" onclick="toggleCompletedTask(${tasks[i].id}, ${tasks[i].completed})">Completed?</button>
+                            <button type="button" class="btn btn-danger" onclick="deleteTask(${tasks[i].id})">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -76,6 +76,37 @@ const readAllTasks = () => {
         })
         .catch(err => console.error(`error ${err}`));
 };
+
+const readByIdTask = (taskId) => {
+    fetch(`http://localhost:8080/task/read/${taskId}`)
+        .then(response => response.json())
+        .then(model => {
+            console.log("readByIdTask:")
+            console.log(model);
+            return model;
+        })
+        .catch(err => console.error(`error ${err}`));
+}
+
+const toggleCompletedTask = (taskId, completed) => {
+    let data = {
+        "completed": completed ? false : true
+    }
+
+    fetch(`http://localhost:8080/task/update/${taskId}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
+        .then(model => {
+            console.log(model);
+            readAllTasks();
+        })
+        .catch(err => console.error(`error ${err}`));
+}
 
 const createTask = () => {
     const newTaskTitle = _newTaskTitle.value;
@@ -93,11 +124,27 @@ const createTask = () => {
         }
     })
         .then(response => response.json())
-        .then(model => { 
-            console.log(model); 
+        .then(model => {
+            console.log(model);
             readAllTasks();
         })
         .catch(err => console.error(`error ${err}`));
+};
+
+const deleteTask = (taskId) => {
+    fetch(`http://localhost:8080/task/delete/${taskId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => console.log(response))
+        .then(() => readAllTasks())
+        .catch(err => console.error(`error ${err}`));
+};
+
+const getTitleFromTask = (taskTitle, completed) => {
+    return completed ? `<span class="text-decoration-line-through">${taskTitle}</span>` : taskTitle;
 };
 
 
@@ -134,7 +181,7 @@ const createAssignee = () => {
         }
     })
         .then(response => response.json())
-        .then(model => { 
+        .then(model => {
             console.log(model);
             populateAssignees();
         })
@@ -157,7 +204,7 @@ const updateAssignee = () => {
         }
     })
         .then(response => response.json())
-        .then(model => { 
+        .then(model => {
             console.log(model)
             populateAssignees();
         })
@@ -174,9 +221,9 @@ const deleteAssignee = () => {
         }
     })
         .then(response => response.json())
-        .then(model => { 
+        .then(model => {
             console.log("Delete successful");
-            populateAssignees(); 
+            populateAssignees();
         })
         .catch(err => console.error(`error ${err}`));
 };
