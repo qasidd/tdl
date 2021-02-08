@@ -2,6 +2,9 @@
 
 // Variables
 
+const taskUrl = "http://localhost:8080/task";
+const assigneeUrl = "http://localhost:8080/assignee";
+
 const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
 const _editTaskModal = document.querySelector("#editTaskModal");
 const _addAssigneeToTaskModal = document.querySelector("#addAssigneeToTaskModal");
@@ -22,7 +25,7 @@ const _editAssigneeSelect = document.querySelector("#editAssigneeSelect");
 
 
 const readAllTasks = () => {
-    fetch("http://localhost:8080/task/read/all")
+    fetch(`${taskUrl}//read/all`)
         .then(response => response.json())
         .then(tasks => {
             const getAssigneesFromTask = (assignees) => {
@@ -83,7 +86,7 @@ const readAllTasks = () => {
 };
 
 const readByIdTask = (taskId) => {
-    fetch(`http://localhost:8080/task/read/${taskId}`)
+    fetch(`${taskUrl}/read/${taskId}`)
         .then(response => response.json())
         .then(model => {
             console.log("readByIdTask:")
@@ -98,7 +101,7 @@ const toggleCompletedTask = (taskId, completed) => {
         "completed": completed ? false : true
     }
 
-    fetch(`http://localhost:8080/task/update/${taskId}`, {
+    fetch(`${taskUrl}/update/${taskId}`, {
         method: "PUT",
         body: JSON.stringify(data),
         headers: {
@@ -121,7 +124,7 @@ const createTask = () => {
         "completed": false
     }
 
-    fetch("http://localhost:8080/task/create", {
+    fetch(`${taskUrl}/create`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -137,7 +140,7 @@ const createTask = () => {
 };
 
 const deleteTask = (taskId) => {
-    fetch(`http://localhost:8080/task/delete/${taskId}`, {
+    fetch(`${taskUrl}/delete/${taskId}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
@@ -176,7 +179,7 @@ _editTaskSubmit.addEventListener('click', () => {
         "title": title
     }
 
-    fetch(`http://localhost:8080/task/update/${taskId}`, {
+    fetch(`${taskUrl}/update/${taskId}`, {
         method: "PUT",
         body: JSON.stringify(data),
         headers: {
@@ -195,7 +198,7 @@ _addAssigneeToTaskSubmit.addEventListener('click', () => {
     let taskId = _addAssigneeToTaskSubmit.getAttribute('data-bs-id');
     let assigneeId = _addAssigneeToTaskSelect.value;
 
-    fetch(`http://localhost:8080/task/update/${taskId}/add-assignee?assignee_id=${assigneeId}`, {
+    fetch(`${taskUrl}/update/${taskId}/add-assignee?assignee_id=${assigneeId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -217,7 +220,7 @@ const populateAssignees = () => {
     _addAssigneeToTaskSelect.innerHTML = '';
     _editAssigneeSelect.innerHTML = '';
 
-    fetch("http://localhost:8080/assignee/read/all")
+    fetch(`${assigneeUrl}/read/all`)
         .then(response => response.json())
         .then(assignees => {
             for (let i = 0; i < assignees.length; i++) {
@@ -235,7 +238,7 @@ const createAssignee = () => {
         "name": newAssigneeName
     }
 
-    fetch("http://localhost:8080/assignee/create", {
+    fetch(`${assigneeUrl}/create`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -258,7 +261,7 @@ const updateAssignee = () => {
         "name": editAssigneeName
     }
 
-    fetch(`http://localhost:8080/assignee/update?id=${editAssigneeId}`, {
+    fetch(`${assigneeUrl}/update?id=${editAssigneeId}`, {
         method: "PUT",
         body: JSON.stringify(data),
         headers: {
@@ -276,7 +279,7 @@ const updateAssignee = () => {
 const deleteAssignee = () => {
     const editAssigneeId = _editAssigneeSelect.value;
 
-    fetch(`http://localhost:8080/assignee/delete/${editAssigneeId}`, {
+    fetch(`${assigneeUrl}/delete/${editAssigneeId}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"

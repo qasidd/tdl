@@ -2,6 +2,10 @@ body {
     font: 1rem/1.5 var(--bs-font-monospace);
 }
 
+header h1 {
+    margin-bottom: 0px;
+}
+
 .titleColumn .title-main-btn {
     width: 100%;
 }
@@ -46,9 +50,5 @@ body {
 @media screen and (max-width: 991.99px) {
     body {
         margin-top: 24px;
-    }
-
-    header h1 {
-        margin-bottom: 0px;
     }
 }
