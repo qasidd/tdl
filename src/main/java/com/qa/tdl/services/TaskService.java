@@ -78,7 +78,9 @@ public class TaskService {
 		if (model.getTitle() != null) {
 			existing.setTitle(model.getTitle());
 		}
-		existing.setCompleted(model.getCompleted());
+		if (model.getCompleted() != null) {
+			existing.setCompleted(model.getCompleted());
+		}
 
 		return this.mapToDto(this.repo.save(existing));
 	}

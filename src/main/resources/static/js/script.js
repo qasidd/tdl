@@ -4,8 +4,13 @@
 
 const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
 const _editTaskModal = document.querySelector("#editTaskModal");
+const _addAssigneeToTaskModal = document.querySelector("#addAssigneeToTaskModal");
 
 const _newTaskTitle = document.querySelector("#newTaskTitle");
+const _editTaskTitle = document.querySelector("#editTaskTitle");
+
+const _editTaskSubmit = document.querySelector("#editTaskSubmit");
+const _addAssigneeToTaskSubmit = document.querySelector("#addAssigneeToTaskSubmit");
 
 const _newAssigneeName = document.querySelector("#newAssigneeName");
 const _editAssigneeName = document.querySelector("#editAssigneeName");
@@ -147,6 +152,63 @@ const getTitleFromTask = (taskTitle, completed) => {
     return completed ? `<span class="text-decoration-line-through">${taskTitle}</span>` : taskTitle;
 };
 
+_editTaskModal.addEventListener('show.bs.modal', (event) => {
+    let button = event.relatedTarget;
+    let taskId = button.getAttribute('data-bs-id');
+
+    let submit = _editTaskModal.querySelector('button[type=submit]');
+    submit.setAttribute('data-bs-id', taskId);
+});
+
+_addAssigneeToTaskModal.addEventListener('show.bs.modal', (event) => {
+    let button = event.relatedTarget;
+    let taskId = button.getAttribute('data-bs-id');
+
+    let submit = _addAssigneeToTaskModal.querySelector('button[type=submit]');
+    submit.setAttribute('data-bs-id', taskId);
+});
+
+_editTaskSubmit.addEventListener('click', () => {
+    let taskId = _editTaskSubmit.getAttribute('data-bs-id');
+    let title = _editTaskTitle.value;
+
+    let data = {
+        "title": title
+    }
+
+    fetch(`http://localhost:8080/task/update/${taskId}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
+        .then(model => {
+            console.log(model);
+            readAllTasks();
+        })
+        .catch(err => console.error(`error ${err}`));
+});
+
+_addAssigneeToTaskSubmit.addEventListener('click', () => {
+    let taskId = _addAssigneeToTaskSubmit.getAttribute('data-bs-id');
+    let assigneeId = _addAssigneeToTaskSelect.value;
+
+    fetch(`http://localhost:8080/task/update/${taskId}/add-assignee?assignee_id=${assigneeId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
+        .then(model => {
+            console.log(model);
+            readAllTasks();
+        })
+        .catch(err => console.error(`error ${err}`));
+});
+
 
 // Assignee
 
@@ -206,7 +268,7 @@ const updateAssignee = () => {
         .then(response => response.json())
         .then(model => {
             console.log(model)
-            populateAssignees();
+            refresh();
         })
         .catch(err => console.error(`error ${err}`));
 };
@@ -223,7 +285,7 @@ const deleteAssignee = () => {
         .then(response => response.json())
         .then(model => {
             console.log("Delete successful");
-            populateAssignees();
+            refresh();
         })
         .catch(err => console.error(`error ${err}`));
 };
