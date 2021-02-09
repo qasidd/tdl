@@ -49,10 +49,11 @@ const readAllTasks = () => {
 
             _tdlAccordion.innerHTML = "";
 
-            for (let i = 0; i < tasks.length; i++) {
+            if (tasks.length != 0) {
+                for (let i = 0; i < tasks.length; i++) {
 
-                _tdlAccordion.innerHTML = _tdlAccordion.innerHTML +
-                    `<div class="accordion-item">
+                    _tdlAccordion.innerHTML = _tdlAccordion.innerHTML +
+                        `<div class="accordion-item">
                 <h2 class="accordion-header" id="flush-heading${i}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#flush-collapse${i}" aria-expanded="false"
@@ -81,6 +82,10 @@ const readAllTasks = () => {
                     </div>
                 </div>
             </div>`;
+
+                }
+            } else {
+                _tdlAccordion.innerHTML = `<p class="text-black-50 text-center"><em>No tasks to show!</em></p>`;
             }
         })
         .catch(err => console.error(`error ${err}`));
