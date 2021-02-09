@@ -41,8 +41,9 @@ public class TaskService {
 	public TaskDTO create(TaskDomain model) {
 		return model.getDateTimeSet() == null
 				? this.mapToDto(this.repo.save(
-						new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()), null)))
-				: this.mapToDto(this.repo.save(model));
+						new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))))
+				: this.mapToDto(this.repo.save(
+						new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))));
 	}
 
 	// GET
@@ -74,8 +75,12 @@ public class TaskService {
 		Optional<TaskDomain> oc = this.repo.findById(id);
 		TaskDomain existing = oc.orElseThrow();
 
-		existing.setTitle(model.getTitle());
-		existing.setCompleted(model.getCompleted());
+		if (model.getTitle() != null) {
+			existing.setTitle(model.getTitle());
+		}
+		if (model.getCompleted() != null) {
+			existing.setCompleted(model.getCompleted());
+		}
 
 		return this.mapToDto(this.repo.save(existing));
 	}
