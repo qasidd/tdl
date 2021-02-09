@@ -1,9 +1,16 @@
 'use strict';
 
-// Variables
+// DOM
 
 const taskUrl = "http://localhost:8080/task";
 const assigneeUrl = "http://localhost:8080/assignee";
+
+const _body = document.querySelector('body');
+const _lightButtonList = document.querySelectorAll('.btn-light');
+const _darkButtonList = document.querySelectorAll('.btn-dark');
+const _greyButtonList = document.querySelectorAll('.btn-secondary');
+const _colourToggleButton = document.querySelector('#colourToggleButton');
+const _refreshButton = document.querySelector('#refreshButton');
 
 const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
 const _newTaskModal = document.querySelector("#newTaskModal");
@@ -25,6 +32,7 @@ const _editAssigneeName = document.querySelector("#editAssigneeName");
 const _addAssigneeToTaskSelect = document.querySelector("#addAssigneeToTaskSelect");
 const _editAssigneeSelect = document.querySelector("#editAssigneeSelect");
 
+let darkMode = false;
 
 // Task
 
@@ -178,7 +186,7 @@ const populateTaskAssignees = (taskId) => {
             }
         })
         .catch(err => console.error(`error ${err}`));
-}
+};
 
 _newTaskModal.addEventListener('show.bs.modal', (event) => {
     _newTaskTitle.value = "";
@@ -349,6 +357,58 @@ const deleteAssignee = () => {
             refresh();
         })
         .catch(err => console.error(`error ${err}`));
+};
+
+const lightDarkToggle = (elem) => {
+    if (elem.classList.contains('btn-dark')) {
+        elem.classList.remove('btn-dark');
+        elem.classList.add('btn-light');
+    } else {
+        elem.classList.remove('btn-light');
+        elem.classList.add('btn-dark');
+    }
+}
+
+const greyLightToggle = (elemList) => {
+    if (elemList.length != 0) {
+        if (elemList[0].classList.contains('btn-secondary')) {
+            elemList.forEach(btn => {
+                btn.classList.remove('btn-secondary');
+                btn.classList.add('btn-light');
+            });
+        } else {
+            elemList.forEach(btn => {
+                btn.classList.remove('btn-light');
+                btn.classList.add('btn-secondary');
+            });
+        }
+    }
+}
+
+const listColourToggle = () => {
+    greyLightToggle(_greyButtonList);
+    greyLightToggle(_lightButtonList);
+
+    lightDarkToggle(_colourToggleButton);
+    lightDarkToggle(_refreshButton);
+};
+
+const colourToggle = () => {
+    if (!darkMode) {
+        _body.classList.add('bg-dark');
+        _body.classList.add('text-white');
+
+        listColourToggle();
+
+        darkMode = true;
+    } else {
+        _body.classList.remove('bg-dark');
+        _body.classList.remove('text-white');
+
+        listColourToggle();
+
+        darkMode = false;
+    }
 };
 
 const refresh = () => {

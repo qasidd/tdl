@@ -17,7 +17,7 @@
                 <h1>To-Do List</h1>
             </div>
             <div class="col-6 col-lg-8 d-flex align-items-center justify-content-end">
-                <button class="btn btn-dark" onclick="refresh()">Refresh</button>
+                <button class="btn btn-dark" onclick="refresh()" id="refreshButton">Refresh</button>
             </div>
         </header>
         <div class="row">
@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-6 col-lg-12">
                         <button type="button" class="title-main-btn btn btn-light mt-3" data-bs-toggle="modal"
-                            data-bs-target="#taskModal">New task</button>
+                            data-bs-target="#newTaskModal">New task</button>
 
                         <!-- New task modal -->
                         <div class="modal fade" id="newTaskModal" tabindex="-1" aria-labelledby="taskModalLabel"
@@ -131,6 +131,11 @@
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="col-6 col-lg-12">
+                        <button type="button" class="title-main-btn colour-toggle btn btn-dark mt-3" 
+                            onclick="colourToggle()" id="colourToggleButton">Toggle colours</button>
                     </div>
 
                 </div>
