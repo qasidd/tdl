@@ -6,6 +6,9 @@ const taskUrl = "http://localhost:8080/task";
 const assigneeUrl = "http://localhost:8080/assignee";
 
 const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
+const _newTaskModal = document.querySelector("#newTaskModal");
+const _newAssigneeModal = document.querySelector("#newAssigneeModal");
+const _editAssigneeModal = document.querySelector("#editAssigneeModal");
 const _editTaskModal = document.querySelector("#editTaskModal");
 const _addAssigneeToTaskModal = document.querySelector("#addAssigneeToTaskModal");
 
@@ -169,18 +172,32 @@ const populateTaskAssignees = (taskId) => {
             let assignees = model.assignees;
             if (assignees.length !== 0) {
                 for (let i = 0; i < assignees.length; i++) {
-                    _editTaskRemoveAssigneeSelect.innerHTML = `${_editTaskRemoveAssigneeSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
+                    _editTaskRemoveAssigneeSelect.innerHTML =
+                        `${_editTaskRemoveAssigneeSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
                 }
             }
         })
         .catch(err => console.error(`error ${err}`));
 }
 
+_newTaskModal.addEventListener('show.bs.modal', (event) => {
+    _newTaskTitle.value = "";
+});
+
+_newAssigneeModal.addEventListener('show.bs.modal', (event) => {
+    _newAssigneeName.value = "";
+});
+
+_editAssigneeModal.addEventListener('show.bs.modal', (event) => {
+    _editAssigneeName.value = "";
+});
+
 _editTaskModal.addEventListener('show.bs.modal', (event) => {
     let button = event.relatedTarget;
     let taskId = button.getAttribute('data-bs-id');
     _editTaskSubmit.setAttribute('data-bs-id', taskId);
     _editTaskRemoveAssigneeButton.setAttribute('data-bs-id', taskId);
+    _editTaskTitle.value = "";
     populateTaskAssignees(taskId);
 });
 
@@ -262,8 +279,10 @@ const populateAssignees = () => {
         .then(assignees => {
             if (assignees.length != 0) {
                 for (let i = 0; i < assignees.length; i++) {
-                    _addAssigneeToTaskSelect.innerHTML = `${_addAssigneeToTaskSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
-                    _editAssigneeSelect.innerHTML = `${_editAssigneeSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
+                    _addAssigneeToTaskSelect.innerHTML =
+                        `${_addAssigneeToTaskSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
+                    _editAssigneeSelect.innerHTML =
+                        `${_editAssigneeSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
                 }
             }
         })
