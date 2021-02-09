@@ -15,6 +15,7 @@ let _accordionButtonList;
 let _modalContentList;
 let _modalFormControlList;
 let _modalFormSelectList;
+const _modalCloseButtonList = document.querySelectorAll('.modal-header .btn-close');
 
 const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
 const _newTaskModal = document.querySelector("#newTaskModal");
@@ -76,6 +77,10 @@ const modalColourToggle = () => {
         elem.classList.toggle('bg-dark');
         elem.classList.toggle('text-light');
     });
+
+    _modalCloseButtonList.forEach((elem) => {
+        elem.classList.toggle('btn-close-white');
+    })
 };
 
 const accordionButtonColourToggle = () => {
