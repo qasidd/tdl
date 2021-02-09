@@ -31,6 +31,10 @@ header h1 {
     padding-top: 25px;
 }
 
+.accordion-button:not(.collapsed) {
+    color: #0c63e4 !important;
+}
+
 @media screen and (min-width: 992px) {
     body {
         margin-top: 48px;

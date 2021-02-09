@@ -11,6 +11,10 @@ const _darkButtonList = document.querySelectorAll('.btn-dark');
 const _greyButtonList = document.querySelectorAll('.btn-secondary');
 const _colourToggleButton = document.querySelector('#colourToggleButton');
 const _refreshButton = document.querySelector('#refreshButton');
+let _accordionButtonList;
+let _modalContentList;
+let _modalFormControlList;
+let _modalFormSelectList;
 
 const _tdlAccordion = document.querySelector("#tdlAccordionFlush");
 const _newTaskModal = document.querySelector("#newTaskModal");
@@ -32,7 +36,82 @@ const _editAssigneeName = document.querySelector("#editAssigneeName");
 const _addAssigneeToTaskSelect = document.querySelector("#addAssigneeToTaskSelect");
 const _editAssigneeSelect = document.querySelector("#editAssigneeSelect");
 
+// Dark mode
+
 let darkMode = false;
+
+const lightDarkButtonToggle = (elem) => {
+    elem.classList.toggle('btn-dark');
+    elem.classList.toggle('btn-light');
+}
+
+const greyLightButtonToggle = (elemList) => {
+    if (elemList.length != 0) {
+        elemList.forEach(btn => {
+            btn.classList.toggle('btn-secondary');
+            btn.classList.toggle('btn-light');
+        });
+    }
+}
+
+const listColourToggle = () => {
+    greyLightButtonToggle(_greyButtonList);
+    greyLightButtonToggle(_lightButtonList);
+
+    lightDarkButtonToggle(_colourToggleButton);
+    lightDarkButtonToggle(_refreshButton);
+};
+
+const modalColourToggle = () => {
+    _modalContentList.forEach((elem) => {
+        elem.classList.toggle('bg-dark');
+    });
+
+    _modalFormControlList.forEach((elem) => {
+        elem.classList.toggle('bg-dark');
+        elem.classList.toggle('text-light');
+    });
+
+    _modalFormSelectList.forEach((elem) => {
+        elem.classList.toggle('bg-dark');
+        elem.classList.toggle('text-light');
+    });
+};
+
+const accordionButtonColourToggle = () => {
+    _accordionButtonList = document.querySelectorAll('.accordion-button')
+    _modalContentList = document.querySelectorAll('.modal-content');
+    _modalFormControlList = document.querySelectorAll('.modal-content .form-control');
+    _modalFormSelectList = document.querySelectorAll('.modal-content .form-select');
+
+    _accordionButtonList.forEach((elem) => elem.classList.toggle('text-white'));
+
+    for (let i = 0; i < _accordionButtonList.length - 1; i++) {
+        _accordionButtonList[i].classList.toggle('border-bottom');
+        _accordionButtonList[i].classList.toggle('border-secondary');
+    }
+};
+
+const bodyColourToggle = () => {
+    _body.classList.toggle('bg-dark');
+    _body.classList.toggle('text-white');
+};
+
+const colourToggle = () => {
+    if (!darkMode) {
+        bodyColourToggle();
+        listColourToggle();
+        accordionButtonColourToggle();
+        modalColourToggle();
+        darkMode = true;
+    } else {
+        bodyColourToggle();
+        listColourToggle();
+        accordionButtonColourToggle();
+        modalColourToggle();
+        darkMode = false;
+    }
+};
 
 // Task
 
@@ -97,6 +176,10 @@ const readAllTasks = () => {
                 }
             } else {
                 _tdlAccordion.innerHTML = `<p class="text-black-50 text-center"><em>No tasks to show!</em></p>`;
+            }
+
+            if (darkMode) {
+                accordionButtonColourToggle();
             }
         })
         .catch(err => console.error(`error ${err}`));
@@ -357,58 +440,6 @@ const deleteAssignee = () => {
             refresh();
         })
         .catch(err => console.error(`error ${err}`));
-};
-
-const lightDarkToggle = (elem) => {
-    if (elem.classList.contains('btn-dark')) {
-        elem.classList.remove('btn-dark');
-        elem.classList.add('btn-light');
-    } else {
-        elem.classList.remove('btn-light');
-        elem.classList.add('btn-dark');
-    }
-}
-
-const greyLightToggle = (elemList) => {
-    if (elemList.length != 0) {
-        if (elemList[0].classList.contains('btn-secondary')) {
-            elemList.forEach(btn => {
-                btn.classList.remove('btn-secondary');
-                btn.classList.add('btn-light');
-            });
-        } else {
-            elemList.forEach(btn => {
-                btn.classList.remove('btn-light');
-                btn.classList.add('btn-secondary');
-            });
-        }
-    }
-}
-
-const listColourToggle = () => {
-    greyLightToggle(_greyButtonList);
-    greyLightToggle(_lightButtonList);
-
-    lightDarkToggle(_colourToggleButton);
-    lightDarkToggle(_refreshButton);
-};
-
-const colourToggle = () => {
-    if (!darkMode) {
-        _body.classList.add('bg-dark');
-        _body.classList.add('text-white');
-
-        listColourToggle();
-
-        darkMode = true;
-    } else {
-        _body.classList.remove('bg-dark');
-        _body.classList.remove('text-white');
-
-        listColourToggle();
-
-        darkMode = false;
-    }
 };
 
 const refresh = () => {

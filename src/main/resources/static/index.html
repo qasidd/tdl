@@ -48,8 +48,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary"
-                                            onclick="createTask()" data-bs-dismiss="modal">Add</button>
+                                        <button type="button" class="btn btn-primary" onclick="createTask()"
+                                            data-bs-dismiss="modal">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -82,8 +82,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary"
-                                            onclick="createAssignee()" data-bs-dismiss="modal">Add</button>
+                                        <button type="button" class="btn btn-primary" onclick="createAssignee()"
+                                            data-bs-dismiss="modal">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -122,10 +122,10 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary"
-                                            onclick="updateAssignee()" data-bs-dismiss="modal">Save</button>
-                                        <button type="button" class="btn btn-danger"
-                                            onclick="deleteAssignee()" data-bs-dismiss="modal">Delete</button>
+                                        <button type="button" class="btn btn-primary" onclick="updateAssignee()"
+                                            data-bs-dismiss="modal">Save</button>
+                                        <button type="button" class="btn btn-danger" onclick="deleteAssignee()"
+                                            data-bs-dismiss="modal">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                     </div>
 
                     <div class="col-6 col-lg-12">
-                        <button type="button" class="title-main-btn colour-toggle btn btn-dark mt-3" 
+                        <button type="button" class="title-main-btn colour-toggle btn btn-dark mt-3"
                             onclick="colourToggle()" id="colourToggleButton">Toggle colours</button>
                     </div>
 
@@ -144,6 +144,67 @@
                 <div class="tdl">
                     <div class="row">
                         <div class="accordion accordion-flush" id="tdlAccordionFlush">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-heading1">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse1" aria-expanded="false"
+                                        aria-controls="flush-collapse1">
+                                        <div class="d-flex flex-column text-start">
+                                            <span class="task-title">Task title</span>
+                                            <span class="assigned-to">Assigned to: Jane, Bob</span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse1" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-heading1" data-bs-parent="#tdlAccordionFlush">
+                                    <div class="accordion-body d-flex flex-column text-start">
+                                        <p class="date-time-stamp">Added: 21 Feb 2019</p>
+                                        <div class="task-edit-buttons d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editTaskModal"
+                                                data-bs-id="1">Edit task</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal"
+                                                data-bs-id="1">Add assignee</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                onclick="toggleCompletedTask(1, 1)">Completed?</button>
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="deleteTask(1)">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-heading2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse2" aria-expanded="false"
+                                        aria-controls="flush-collapse2">
+                                        <div class="d-flex flex-column text-start">
+                                            <span class="task-title">Task title two</span>
+                                            <span class="assigned-to">Assigned to: Gene</span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse2" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-heading2" data-bs-parent="#tdlAccordionFlush">
+                                    <div class="accordion-body d-flex flex-column text-start">
+                                        <p class="date-time-stamp">Added: 3 Jan 2020</p>
+                                        <div class="task-edit-buttons d-flex justify-content-between">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editTaskModal"
+                                                data-bs-id="2">Edit task</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#addAssigneeToTaskModal"
+                                                data-bs-id="2">Add assignee</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                onclick="toggleCompletedTask(2, 2)">Completed?</button>
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="deleteTask(2)">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -174,8 +235,10 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="editTaskSubmit" data-bs-dismiss="modal">Save</button>
-                                <button type="button" class="btn btn-danger" id="editTaskRemoveAssigneeButton" data-bs-dismiss="modal">Remove
+                                <button type="button" class="btn btn-primary" id="editTaskSubmit"
+                                    data-bs-dismiss="modal">Save</button>
+                                <button type="button" class="btn btn-danger" id="editTaskRemoveAssigneeButton"
+                                    data-bs-dismiss="modal">Remove
                                     assignee</button>
                             </div>
                         </div>
@@ -205,7 +268,8 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="addAssigneeToTaskSubmit" data-bs-dismiss="modal">Save</button>
+                                <button type="button" class="btn btn-primary" id="addAssigneeToTaskSubmit"
+                                    data-bs-dismiss="modal">Save</button>
                             </div>
                         </div>
                     </div>
