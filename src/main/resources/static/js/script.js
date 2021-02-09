@@ -11,9 +11,11 @@ const _addAssigneeToTaskModal = document.querySelector("#addAssigneeToTaskModal"
 
 const _newTaskTitle = document.querySelector("#newTaskTitle");
 const _editTaskTitle = document.querySelector("#editTaskTitle");
+const _editTaskRemoveAssigneeSelect = document.querySelector("#editTaskRemoveAssigneeSelect");
 
 const _editTaskSubmit = document.querySelector("#editTaskSubmit");
 const _addAssigneeToTaskSubmit = document.querySelector("#addAssigneeToTaskSubmit");
+const _editTaskRemoveAssigneeButton = document.querySelector("#editTaskRemoveAssigneeButton");
 
 const _newAssigneeName = document.querySelector("#newAssigneeName");
 const _editAssigneeName = document.querySelector("#editAssigneeName");
@@ -22,7 +24,6 @@ const _editAssigneeSelect = document.querySelector("#editAssigneeSelect");
 
 
 // Task
-
 
 const readAllTasks = () => {
     fetch(`${taskUrl}//read/all`)
@@ -155,20 +156,33 @@ const getTitleFromTask = (taskTitle, completed) => {
     return completed ? `<span class="text-decoration-line-through">${taskTitle}</span>` : taskTitle;
 };
 
+const populateTaskAssignees = (taskId) => {
+    fetch(`${taskUrl}/read/${taskId}`)
+        .then(response => response.json())
+        .then(model => {
+            _editTaskRemoveAssigneeSelect.innerHTML = "";
+            let assignees = model.assignees;
+            if (assignees.length !== 0) {
+                for (let i = 0; i < assignees.length; i++) {
+                    _editTaskRemoveAssigneeSelect.innerHTML = `${_editTaskRemoveAssigneeSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
+                }
+            }
+        })
+        .catch(err => console.error(`error ${err}`));
+}
+
 _editTaskModal.addEventListener('show.bs.modal', (event) => {
     let button = event.relatedTarget;
     let taskId = button.getAttribute('data-bs-id');
-
-    let submit = _editTaskModal.querySelector('button[type=submit]');
-    submit.setAttribute('data-bs-id', taskId);
+    _editTaskSubmit.setAttribute('data-bs-id', taskId);
+    _editTaskRemoveAssigneeButton.setAttribute('data-bs-id', taskId);
+    populateTaskAssignees(taskId);
 });
 
 _addAssigneeToTaskModal.addEventListener('show.bs.modal', (event) => {
     let button = event.relatedTarget;
     let taskId = button.getAttribute('data-bs-id');
-
-    let submit = _addAssigneeToTaskModal.querySelector('button[type=submit]');
-    submit.setAttribute('data-bs-id', taskId);
+    _addAssigneeToTaskSubmit.setAttribute('data-bs-id', taskId);
 });
 
 _editTaskSubmit.addEventListener('click', () => {
@@ -212,9 +226,27 @@ _addAssigneeToTaskSubmit.addEventListener('click', () => {
         .catch(err => console.error(`error ${err}`));
 });
 
+_editTaskRemoveAssigneeButton.addEventListener('click', () => {
+    let taskId = _editTaskRemoveAssigneeButton.getAttribute('data-bs-id');
+    let assigneeId = _editTaskRemoveAssigneeSelect.value;
+
+    fetch(`${taskUrl}/update/${taskId}/remove-assignee?assignee_id=${assigneeId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
+        .then(model => {
+            console.log(model);
+            readAllTasks();
+            populateTaskAssignees(taskId);
+        })
+        .catch(err => console.error(`error ${err}`));
+});
+
 
 // Assignee
-
 
 const populateAssignees = () => {
     _addAssigneeToTaskSelect.innerHTML = '';
@@ -223,9 +255,11 @@ const populateAssignees = () => {
     fetch(`${assigneeUrl}/read/all`)
         .then(response => response.json())
         .then(assignees => {
-            for (let i = 0; i < assignees.length; i++) {
-                _addAssigneeToTaskSelect.innerHTML = `${_addAssigneeToTaskSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
-                _editAssigneeSelect.innerHTML = `${_editAssigneeSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
+            if (assignees.length != 0) {
+                for (let i = 0; i < assignees.length; i++) {
+                    _addAssigneeToTaskSelect.innerHTML = `${_addAssigneeToTaskSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
+                    _editAssigneeSelect.innerHTML = `${_editAssigneeSelect.innerHTML} <option value="${assignees[i].id}">${assignees[i].name}</option>`;
+                }
             }
         })
         .catch(err => console.error(`error ${err}`));
@@ -285,8 +319,8 @@ const deleteAssignee = () => {
             "Content-Type": "application/json"
         }
     })
-        .then(response => response.json())
-        .then(model => {
+        .then(response => console.log(response))
+        .then(() => {
             console.log("Delete successful");
             refresh();
         })

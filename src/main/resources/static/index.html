@@ -48,7 +48,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-outline-primary"
+                                        <button type="button" class="btn btn-primary"
                                             onclick="createTask()">Add</button>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-outline-primary"
+                                        <button type="button" class="btn btn-primary"
                                             onclick="createAssignee()">Add</button>
                                     </div>
                                 </div>
@@ -122,7 +122,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-outline-primary"
+                                        <button type="button" class="btn btn-primary"
                                             onclick="updateAssignee()">Save</button>
                                         <button type="button" class="btn btn-danger"
                                             onclick="deleteAssignee()">Delete</button>
@@ -156,15 +156,22 @@
                             <div class="modal-body">
                                 <div class="container-fluid">
                                     <form name="editTask">
-                                        <label for="editTaskTitle" class="form-label">Title</label>
-                                        <input name="editTask" type="text" class="form-control " id="editTaskTitle">
+                                        <div class="mb-3">
+                                            <label for="editTaskTitle" class="form-label">Title</label>
+                                            <input name="editTask" type="text" class="form-control " id="editTaskTitle">
+                                        </div>
+                                        <label for="editTaskRemoveAssigneeSelect" class="form-label">Assignee</label>
+                                        <select name="editTask" id="editTaskRemoveAssigneeSelect" class="form-select">
+                                        </select>
                                     </form>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-primary" id="editTaskSubmit">Save</button>
+                                <button type="button" class="btn btn-primary" id="editTaskSubmit">Save</button>
+                                <button type="button" class="btn btn-danger" id="editTaskRemoveAssigneeButton">Remove
+                                    assignee</button>
                             </div>
                         </div>
                     </div>
@@ -193,7 +200,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-primary" id="addAssigneeToTaskSubmit">Save</button>
+                                <button type="button" class="btn btn-primary" id="addAssigneeToTaskSubmit">Save</button>
                             </div>
                         </div>
                     </div>
