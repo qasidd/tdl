@@ -76,6 +76,7 @@ public class AssigneeDomain {
 		for (TaskDomain task : tasks) {
 			task.removeAssignee(this);
 		}
+		tasks.clear();
 	}
 
 	@Override
