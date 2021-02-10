@@ -62,6 +62,24 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
+	public void createTestDateTimeSetNull() {
+		TaskDomain TEST_TASK = new TaskDomain(5L, "Food shopping", false, null);
+		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), Timestamp.from(Instant.now()), null);
+		
+		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK);
+		Mockito.when(this.mapper.map(TEST_TASK, TaskDTO.class)).thenReturn(TEST_DTO);
+		
+		TaskDTO result = this.service.create(TEST_TASK);
+		
+		Assertions.assertThat(result).isNotNull();
+		Assertions.assertThat(result)
+			.usingRecursiveComparison()
+			.isEqualTo(TEST_DTO);
+		
+		Mockito.verify(this.repo, Mockito.times(1)).save(Mockito.any(TaskDomain.class));
+	}
+	
+	@Test
 	public void readTaskTest() {
 		Long id = 1L;
 		TaskDomain TEST_TASK = new TaskDomain(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
@@ -196,7 +214,7 @@ public class TaskServiceUnitTest {
 		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK_UPDATE);
 		Mockito.when(this.mapper.map(TEST_TASK_UPDATE, TaskDTO.class)).thenReturn(TEST_DTO_UPDATE);
 		
-		TaskDTO result = this.service.addAssignee(id, assigneeIdRemove);
+		TaskDTO result = this.service.removeAssignee(id, assigneeIdRemove);
 		
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result)
