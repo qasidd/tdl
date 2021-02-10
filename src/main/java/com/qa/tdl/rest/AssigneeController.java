@@ -39,7 +39,7 @@ public class AssigneeController {
 	}
 	
 	@GetMapping("/read/{id}")
-	public ResponseEntity<AssigneeDTO> readAssignee(@PathVariable int id) {
+	public ResponseEntity<AssigneeDTO> readAssignee(@PathVariable long id) {
 		return ResponseEntity.ok(this.service.readAssignee(id));
 	}
 	
@@ -51,7 +51,7 @@ public class AssigneeController {
 	
 	// PUT
 	@PutMapping("/update")
-	public ResponseEntity<AssigneeDTO> updateAssignee(@PathParam("id") int id, @RequestBody AssigneeDomain model) {
+	public ResponseEntity<AssigneeDTO> updateAssignee(@PathParam("id") long id, @RequestBody AssigneeDomain model) {
 		return new ResponseEntity<>(this.service.update(id, model), HttpStatus.ACCEPTED);
 	}
 	

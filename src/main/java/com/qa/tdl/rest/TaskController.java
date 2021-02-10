@@ -38,7 +38,7 @@ public class TaskController {
 	}
 
 	@GetMapping("/read/{id}")
-	public ResponseEntity<TaskDTO> readTask(@PathVariable int id) {
+	public ResponseEntity<TaskDTO> readTask(@PathVariable long id) {
 		return ResponseEntity.ok(this.service.readTask(id));
 	}
 
@@ -50,23 +50,23 @@ public class TaskController {
 
 	// PUT
 	@PutMapping("/update/{id}")
-	public ResponseEntity<TaskDTO> updateTask(@PathVariable("id") int id, @RequestBody TaskDomain model) {
+	public ResponseEntity<TaskDTO> updateTask(@PathVariable("id") long id, @RequestBody TaskDomain model) {
 		return new ResponseEntity<>(this.service.update(id, model), HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping("/update/{id}/add-assignee")
-	public ResponseEntity<TaskDTO> addAssignee(@RequestParam("assignee_id") int assigneeId, @PathVariable int id) {
+	public ResponseEntity<TaskDTO> addAssignee(@PathVariable long id, @RequestParam("assignee_id") long assigneeId) {
 		return new ResponseEntity<>(this.service.addAssignee(id, assigneeId), HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping("/update/{id}/remove-assignee")
-	public ResponseEntity<TaskDTO> removeAssignee(@RequestParam("assignee_id") int assigneeId, @PathVariable int id) {
+	public ResponseEntity<TaskDTO> removeAssignee(@PathVariable long id, @RequestParam("assignee_id") long assigneeId) {
 		return new ResponseEntity<>(this.service.removeAssignee(id, assigneeId), HttpStatus.ACCEPTED);
 	}
 
 	// DELETE
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> removeTask(@PathVariable int id) {
+	public ResponseEntity<Object> removeTask(@PathVariable long id) {
 		return new ResponseEntity<>(this.service.delete(id) ? HttpStatus.NO_CONTENT : HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

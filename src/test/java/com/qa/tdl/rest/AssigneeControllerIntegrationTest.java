@@ -1,6 +1,8 @@
 package com.qa.tdl.rest;
 
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +46,25 @@ public class AssigneeControllerIntegrationTest {
 		return this.mapper.map(model, AssigneeDTO.class);
 	}
 	
-	// GET
 	@Test
 	public void readAll() throws Exception {
+		List<AssigneeDTO> expectedResult = List.of(
+				new AssigneeDTO(1L, "Jane"),
+				new AssigneeDTO(2L, "Bob"),
+				new AssigneeDTO(3L, "Paul"));
+		
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, URL + "read/all");
+		
+		ResultMatcher matchStatus = MockMvcResultMatchers.status().isOk();
+		ResultMatcher matchContent = MockMvcResultMatchers.content().json(jsonifier.writeValueAsString(expectedResult));
+		
+		this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchContent);
 	}
 	
 	@Test
 	public void readAssignee() throws Exception {
 		// resources
-		AssigneeDTO expectedResult = new AssigneeDTO(1L, "Jane");
+		AssigneeDTO expectedResult = new AssigneeDTO(id, "Jane");
 		
 		// set up request
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders

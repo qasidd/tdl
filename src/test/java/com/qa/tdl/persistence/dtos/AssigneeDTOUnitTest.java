@@ -4,15 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AssigneeDTOTest {
+public class AssigneeDTOUnitTest {
 	private AssigneeDTO assignee;
 
 	@BeforeEach

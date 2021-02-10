@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.qa.tdl.persistence.domain.AssigneeDomain;
 import com.qa.tdl.persistence.domain.TaskDomain;
@@ -27,8 +24,6 @@ import com.qa.tdl.persistence.repos.AssigneeRepo;
 import com.qa.tdl.persistence.repos.TaskRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"classpath:schema-test.sql", "classpath:data-test.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@ActiveProfiles(profiles = "test")
 public class TaskServiceUnitTest {
 	
 	@MockBean
@@ -109,7 +104,7 @@ public class TaskServiceUnitTest {
 		TaskDTO TEST_DTO1 = new TaskDTO(TEST_TASK1.getId(), TEST_TASK1.getTitle(), TEST_TASK1.getCompleted(), TEST_TASK1.getDateTimeSet(), Set.of(new AssigneeDTO(1L, "Jane")));
 		TaskDTO TEST_DTO2 = new TaskDTO(TEST_TASK2.getId(), TEST_TASK2.getTitle(), TEST_TASK2.getCompleted(), TEST_TASK2.getDateTimeSet(), Set.of(new AssigneeDTO(2L, "Bob"), new AssigneeDTO(3L, "Paul")));
 		TaskDTO TEST_DTO3 = new TaskDTO(TEST_TASK3.getId(), TEST_TASK3.getTitle(), TEST_TASK3.getCompleted(), TEST_TASK3.getDateTimeSet(), Set.of(new AssigneeDTO(3L, "Paul")));
-		TaskDTO TEST_DTO4 = new TaskDTO(TEST_TASK4.getId(), TEST_TASK3.getTitle(), TEST_TASK4.getCompleted(), TEST_TASK4.getDateTimeSet(), Set.of());
+		TaskDTO TEST_DTO4 = new TaskDTO(TEST_TASK4.getId(), TEST_TASK4.getTitle(), TEST_TASK4.getCompleted(), TEST_TASK4.getDateTimeSet(), Set.of());
 		List<TaskDomain> TASK_LIST = List.of(TEST_TASK1, TEST_TASK2, TEST_TASK3, TEST_TASK4);
 		List<TaskDTO> DTO_LIST = List.of(TEST_DTO1, TEST_DTO2, TEST_DTO3, TEST_DTO4);
 		

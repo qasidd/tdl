@@ -1,6 +1,7 @@
 package com.qa.tdl.rest;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,16 +49,30 @@ public class TaskControllerIntegrationTest {
 
 	private TaskDTO mapToDto(TaskDomain model) {
 		TaskDTO dto = this.mapper.map(model, TaskDTO.class);
-		dto.setAssignees(model.getAssignees()
-				.stream()
-				.map(s -> this.mapper.map(s, AssigneeDTO.class))
+		dto.setAssignees(model.getAssignees().stream().map(s -> this.mapper.map(s, AssigneeDTO.class))
 				.collect(Collectors.toSet()));
 		return dto;
 	}
 
-	// GET
 	@Test
 	public void readAll() throws Exception {
+		// resources
+		List<TaskDTO> expectedResult = List.of(
+				new TaskDTO(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDTO(1L, "Jane"))), 
+				new TaskDTO(2L, "Make coffee", false, Timestamp.valueOf("2021-01-21 13:00:00"), 
+						Set.of(new AssigneeDTO(2L, "Bob"), new AssigneeDTO(3L, "Paul"))),
+				new TaskDTO(3L, "Take out bins", true, Timestamp.valueOf("2020-12-30 19:00:00"), Set.of(new AssigneeDTO(2L, "Bob"))),
+				new TaskDTO(4L, "Buy masks", false, Timestamp.valueOf("2021-02-01 03:30:00"), Set.of()));
+		
+		// set up request
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, URL + "read/all");
+		
+		// set up expectations
+		ResultMatcher matchStatus = MockMvcResultMatchers.status().isOk();
+		ResultMatcher matchContent = MockMvcResultMatchers.content().json(jsonifier.writeValueAsString(expectedResult));
+		
+		// perform
+		this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchContent);
 	}
 
 	@Test
