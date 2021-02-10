@@ -1,4 +1,4 @@
-package com.qa.tdl.persistance.domain;
+package com.qa.tdl.persistence.domain;
 
 import java.util.HashSet;
 import java.util.Set;

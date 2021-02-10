@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qa.tdl.persistance.domain.AssigneeDomain;
-import com.qa.tdl.persistance.dtos.AssigneeDTO;
+import com.qa.tdl.persistence.domain.AssigneeDomain;
+import com.qa.tdl.persistence.dtos.AssigneeDTO;
 import com.qa.tdl.services.AssigneeService;
 
 @RestController

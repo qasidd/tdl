@@ -1,4 +1,4 @@
-package com.qa.tdl.persistance.dtos;
+package com.qa.tdl.persistence.dtos;
 
 import java.sql.Timestamp;
 import java.util.Set;

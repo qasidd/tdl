@@ -1,4 +1,4 @@
-package com.qa.tdl.persistance.domain;
+package com.qa.tdl.persistence.domain;
 
 import java.sql.Timestamp;
 import java.util.HashSet;

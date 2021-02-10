@@ -19,8 +19,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qa.tdl.persistance.domain.AssigneeDomain;
-import com.qa.tdl.persistance.dtos.AssigneeDTO;
+import com.qa.tdl.persistence.domain.AssigneeDomain;
+import com.qa.tdl.persistence.dtos.AssigneeDTO;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc

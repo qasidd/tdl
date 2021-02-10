@@ -19,12 +19,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
-import com.qa.tdl.persistance.domain.AssigneeDomain;
-import com.qa.tdl.persistance.domain.TaskDomain;
-import com.qa.tdl.persistance.dtos.AssigneeDTO;
-import com.qa.tdl.persistance.dtos.TaskDTO;
-import com.qa.tdl.persistance.repos.AssigneeRepo;
-import com.qa.tdl.persistance.repos.TaskRepo;
+import com.qa.tdl.persistence.domain.AssigneeDomain;
+import com.qa.tdl.persistence.domain.TaskDomain;
+import com.qa.tdl.persistence.dtos.AssigneeDTO;
+import com.qa.tdl.persistence.dtos.TaskDTO;
+import com.qa.tdl.persistence.repos.AssigneeRepo;
+import com.qa.tdl.persistence.repos.TaskRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Sql(scripts = {"classpath:schema-test.sql", "classpath:data-test.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

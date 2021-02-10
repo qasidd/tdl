@@ -1,4 +1,4 @@
-package com.qa.tdl.persistance.dtos;
+package com.qa.tdl.persistence.dtos;
 
 public class AssigneeDTO {
 	
