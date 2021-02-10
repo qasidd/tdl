@@ -15,20 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
-import com.qa.tdl.persistance.domain.AssigneeDomain;
-import com.qa.tdl.persistance.domain.TaskDomain;
-import com.qa.tdl.persistance.dtos.AssigneeDTO;
-import com.qa.tdl.persistance.dtos.TaskDTO;
-import com.qa.tdl.persistance.repos.AssigneeRepo;
-import com.qa.tdl.persistance.repos.TaskRepo;
+import com.qa.tdl.persistence.domain.AssigneeDomain;
+import com.qa.tdl.persistence.domain.TaskDomain;
+import com.qa.tdl.persistence.dtos.AssigneeDTO;
+import com.qa.tdl.persistence.dtos.TaskDTO;
+import com.qa.tdl.persistence.repos.AssigneeRepo;
+import com.qa.tdl.persistence.repos.TaskRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"classpath:schema-test.sql", "classpath:data-test.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@ActiveProfiles(profiles = "test")
 public class TaskServiceUnitTest {
 	
 	@MockBean
@@ -47,6 +42,24 @@ public class TaskServiceUnitTest {
 	public void createTest() {
 		TaskDomain TEST_TASK = new TaskDomain(5L, "Food shopping", false, Timestamp.from(Instant.now()));
 		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), TEST_TASK.getDateTimeSet(), null);
+		
+		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK);
+		Mockito.when(this.mapper.map(TEST_TASK, TaskDTO.class)).thenReturn(TEST_DTO);
+		
+		TaskDTO result = this.service.create(TEST_TASK);
+		
+		Assertions.assertThat(result).isNotNull();
+		Assertions.assertThat(result)
+			.usingRecursiveComparison()
+			.isEqualTo(TEST_DTO);
+		
+		Mockito.verify(this.repo, Mockito.times(1)).save(Mockito.any(TaskDomain.class));
+	}
+	
+	@Test
+	public void createTestDateTimeSetNull() {
+		TaskDomain TEST_TASK = new TaskDomain(5L, "Food shopping", false, null);
+		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), Timestamp.from(Instant.now()), null);
 		
 		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK);
 		Mockito.when(this.mapper.map(TEST_TASK, TaskDTO.class)).thenReturn(TEST_DTO);
@@ -91,7 +104,7 @@ public class TaskServiceUnitTest {
 		TaskDTO TEST_DTO1 = new TaskDTO(TEST_TASK1.getId(), TEST_TASK1.getTitle(), TEST_TASK1.getCompleted(), TEST_TASK1.getDateTimeSet(), Set.of(new AssigneeDTO(1L, "Jane")));
 		TaskDTO TEST_DTO2 = new TaskDTO(TEST_TASK2.getId(), TEST_TASK2.getTitle(), TEST_TASK2.getCompleted(), TEST_TASK2.getDateTimeSet(), Set.of(new AssigneeDTO(2L, "Bob"), new AssigneeDTO(3L, "Paul")));
 		TaskDTO TEST_DTO3 = new TaskDTO(TEST_TASK3.getId(), TEST_TASK3.getTitle(), TEST_TASK3.getCompleted(), TEST_TASK3.getDateTimeSet(), Set.of(new AssigneeDTO(3L, "Paul")));
-		TaskDTO TEST_DTO4 = new TaskDTO(TEST_TASK4.getId(), TEST_TASK3.getTitle(), TEST_TASK4.getCompleted(), TEST_TASK4.getDateTimeSet(), Set.of());
+		TaskDTO TEST_DTO4 = new TaskDTO(TEST_TASK4.getId(), TEST_TASK4.getTitle(), TEST_TASK4.getCompleted(), TEST_TASK4.getDateTimeSet(), Set.of());
 		List<TaskDomain> TASK_LIST = List.of(TEST_TASK1, TEST_TASK2, TEST_TASK3, TEST_TASK4);
 		List<TaskDTO> DTO_LIST = List.of(TEST_DTO1, TEST_DTO2, TEST_DTO3, TEST_DTO4);
 		
@@ -196,7 +209,7 @@ public class TaskServiceUnitTest {
 		Mockito.when(this.repo.save(Mockito.any(TaskDomain.class))).thenReturn(TEST_TASK_UPDATE);
 		Mockito.when(this.mapper.map(TEST_TASK_UPDATE, TaskDTO.class)).thenReturn(TEST_DTO_UPDATE);
 		
-		TaskDTO result = this.service.addAssignee(id, assigneeIdRemove);
+		TaskDTO result = this.service.removeAssignee(id, assigneeIdRemove);
 		
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result)

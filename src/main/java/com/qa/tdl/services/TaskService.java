@@ -10,11 +10,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qa.tdl.persistance.domain.TaskDomain;
-import com.qa.tdl.persistance.dtos.AssigneeDTO;
-import com.qa.tdl.persistance.dtos.TaskDTO;
-import com.qa.tdl.persistance.repos.AssigneeRepo;
-import com.qa.tdl.persistance.repos.TaskRepo;
+import com.qa.tdl.persistence.domain.TaskDomain;
+import com.qa.tdl.persistence.dtos.AssigneeDTO;
+import com.qa.tdl.persistence.dtos.TaskDTO;
+import com.qa.tdl.persistence.repos.AssigneeRepo;
+import com.qa.tdl.persistence.repos.TaskRepo;
 
 @Service
 public class TaskService {
@@ -40,10 +40,10 @@ public class TaskService {
 	// POST
 	public TaskDTO create(TaskDomain model) {
 		return model.getDateTimeSet() == null
-				? this.mapToDto(this.repo.save(
-						new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))))
-				: this.mapToDto(this.repo.save(
-						new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))));
+				? this.mapToDto(this.repo
+						.save(new TaskDomain(model.getTitle(), model.getCompleted(), Timestamp.from(Instant.now()))))
+				: this.mapToDto(
+						this.repo.save(new TaskDomain(model.getTitle(), model.getCompleted(), model.getDateTimeSet())));
 	}
 
 	// GET
@@ -90,16 +90,16 @@ public class TaskService {
 		TaskDomain existing = oc.orElseThrow();
 
 		existing.addAssignee(this.assigneeRepo.findById(assigneeId).orElseThrow());
-		
+
 		return this.mapToDto(this.repo.save(existing));
 	}
-	
+
 	public TaskDTO removeAssignee(long id, long assigneeId) {
 		Optional<TaskDomain> oc = this.repo.findById(id);
 		TaskDomain existing = oc.orElseThrow();
 
 		existing.removeAssignee(this.assigneeRepo.findById(assigneeId).orElseThrow());
-		
+
 		return this.mapToDto(this.repo.save(existing));
 	}
 

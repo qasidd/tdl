@@ -12,17 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
-import com.qa.tdl.persistance.domain.AssigneeDomain;
-import com.qa.tdl.persistance.dtos.AssigneeDTO;
-import com.qa.tdl.persistance.repos.AssigneeRepo;
+import com.qa.tdl.persistence.domain.AssigneeDomain;
+import com.qa.tdl.persistence.dtos.AssigneeDTO;
+import com.qa.tdl.persistence.repos.AssigneeRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"classpath:schema-test.sql", "classpath:data-test.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@ActiveProfiles(profiles = "test")
 public class AssigneeServiceUnitTest {
 	
 	@MockBean
