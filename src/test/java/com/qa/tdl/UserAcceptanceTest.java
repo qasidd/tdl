@@ -4,26 +4,42 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.qa.tdl.persistence.repos.AssigneeRepo;
+import com.qa.tdl.persistence.repos.TaskRepo;
 import com.qa.tdl.pom.TdlSitePortal;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
+@SpringBootTest
 public class UserAcceptanceTest {
 
-	private final String URL = "http://localhost:8080";
-
+	private static final String URL = "http://localhost:8080";
 	private static WebDriver driver;
 	private static ExtentReports report;
 	private static ExtentTest test;
-	
 	private static TdlSitePortal page;
+	
+	private TaskRepo taskRepo;
+	private AssigneeRepo assigneeRepo;
+	
+	@Autowired
+	public UserAcceptanceTest(TaskRepo taskRepo, AssigneeRepo assigneeRepo) {
+		this.taskRepo = taskRepo;
+		this.assigneeRepo = assigneeRepo;
+	}
 
 	@BeforeAll
 	public static void setup() {
@@ -34,40 +50,113 @@ public class UserAcceptanceTest {
 		driver.manage().window().setSize(new Dimension(1366, 768));
 		
 		page = PageFactory.initElements(driver, TdlSitePortal.class);
+		
+		driver.get(URL);
+	}
+	
+	@BeforeEach
+	public void refresh() {
+//		driver.get(URL);
+//		page.refresh();
 	}
 	
 	@Test
 	public void newTaskTest() {
-		test = report.startTest("New task test");
-		
-		driver.get(URL);
+		test = report.startTest("New Task");
 		
 		String result = page.newTask();
 		
 		if (result.isEmpty() || !("Go shopping".equals(result))) {
-			test.log(LogStatus.FAIL, "New task test failed");
+			test.log(LogStatus.FAIL, "New Task test failed");
 		} else {
-			test.log(LogStatus.PASS, "New task test passed");
+			test.log(LogStatus.PASS, "New Task test passed");
 		}
 
 		Assertions.assertThat(result).isEqualTo("Go shopping");
 	}
 	
 	@Test
-	public void editTaskTest() throws InterruptedException {
-		test = report.startTest("Edit task test");
+	public void updateTaskTest() throws InterruptedException {
+		test = report.startTest("Update Task");
 		
-//		driver.get(URL);
-		
-		String result = page.editTask();
+		String result = page.updateTask();
 		
 		if (result.isEmpty() || !("Fix table".equals(result))) {
-			test.log(LogStatus.FAIL, "Edit task test failed");
+			test.log(LogStatus.FAIL, "Edit Task test failed");
 		} else {
-			test.log(LogStatus.PASS, "Edit task test passed");
+			test.log(LogStatus.PASS, "Edit Task test passed");
 		}
 
 		Assertions.assertThat(result).isEqualTo("Fix table");
+	}
+	
+	@Test
+	public void readAllTest() {
+		test = report.startTest("Read All Task");
+		
+		int result = page.readAllTask();
+		int actual = (int) taskRepo.count();
+		
+		if (result != actual) {
+			test.log(LogStatus.FAIL, "Read All Task test failed");
+		} else {
+			test.log(LogStatus.PASS, "Read All Task test passed");
+		}
+		
+		Assertions.assertThat(result).isEqualTo(actual);
+	}
+	
+	@Test
+	public void deleteTaskTest() {
+		test = report.startTest("Delete Task");
+		
+		int result = page.deleteTask();
+		int actual = (int) taskRepo.count();
+		
+		if (result != actual) {
+			test.log(LogStatus.FAIL, "Delete Task test failed");
+		} else {
+			test.log(LogStatus.PASS, "Delete Task test passed");
+		}
+		
+		Assertions.assertThat(result).isEqualTo(actual);
+	}
+	
+	@Test
+	public void markAsCompletedTest() {
+		test = report.startTest("Mark as Completed Task");
+	}
+	
+	@Test
+	public void addAssigneeTest() {
+		test = report.startTest("Add Assignee to Task");
+		
+	}
+	
+	@Test
+	public void removeAssigneeTest() {
+		test = report.startTest("Remove Assignee from Task");
+		
+	}
+	
+	@Test
+	public void createAssigneeTest() {
+		test = report.startTest("Create Assignee");
+	}
+	
+	@Test
+	public void updateAssigneeTest() {
+		test = report.startTest("Update Assignee");
+	}
+	
+	@Test
+	public void readAllAssigneeTest() {
+		test = report.startTest("Read All Assignees");
+	}
+	
+	@Test
+	public void deleteAssigneeTest() {
+		test = report.startTest("Delete Assignee");
 	}
 
 	@AfterEach
