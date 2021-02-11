@@ -1,8 +1,8 @@
 package com.qa.tdl;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Dimension;
@@ -22,6 +22,8 @@ public class UserAcceptanceTest {
 	private static WebDriver driver;
 	private static ExtentReports report;
 	private static ExtentTest test;
+	
+	private static TdlSitePortal page;
 
 	@BeforeAll
 	public static void setup() {
@@ -30,31 +32,48 @@ public class UserAcceptanceTest {
 
 		driver = new ChromeDriver();
 		driver.manage().window().setSize(new Dimension(1366, 768));
+		
+		page = PageFactory.initElements(driver, TdlSitePortal.class);
 	}
-
+	
 	@Test
-	public void test() throws InterruptedException {
-		test = report.startTest("Demo test");
+	public void newTaskTest() {
+		test = report.startTest("New task test");
 		
 		driver.get(URL);
-
-		TdlSitePortal page = PageFactory.initElements(driver, TdlSitePortal.class);
 		
-		boolean result = page.test();
+		String result = page.newTask();
 		
-		if (result) {
-			test.log(LogStatus.PASS, "Demo test passed");
+		if (result.isEmpty() || !("Go shopping".equals(result))) {
+			test.log(LogStatus.FAIL, "New task test failed");
 		} else {
-			test.log(LogStatus.FAIL, "Demo test failed");
+			test.log(LogStatus.PASS, "New task test passed");
 		}
 
-		Assertions.assertTrue(result);
+		Assertions.assertThat(result).isEqualTo("Go shopping");
+	}
+	
+	@Test
+	public void editTaskTest() throws InterruptedException {
+		test = report.startTest("Edit task test");
+		
+//		driver.get(URL);
+		
+		String result = page.editTask();
+		
+		if (result.isEmpty() || !("Fix table".equals(result))) {
+			test.log(LogStatus.FAIL, "Edit task test failed");
+		} else {
+			test.log(LogStatus.PASS, "Edit task test passed");
+		}
+
+		Assertions.assertThat(result).isEqualTo("Fix table");
 	}
 
 	@AfterEach
 	public void close() {
 		report.endTest(test);
-		driver.close();
+//		driver.close();
 	}
 
 	@AfterAll

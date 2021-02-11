@@ -8,6 +8,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NewTaskModal {
 	
+	@FindBy(id = "newTaskTitle")
+	private WebElement newTaskTitleInput;
+	
+	@FindBy(xpath = "//*[@id=\"newTaskModal\"]/div/div/div[3]/button[2]")
+	private WebElement newTaskSaveButton;
+	
 	@FindBy(xpath = "//*[@id=\"newTaskModal\"]/div/div/div[3]/button[1]")
 	private WebElement newTaskModalCloseButton;
 	
@@ -16,6 +22,12 @@ public class NewTaskModal {
 	public NewTaskModal(WebDriver driver) {
 		super();
 		webDriverWait = new WebDriverWait(driver, 3);
+	}
+	
+	public void newTask() {
+		webDriverWait.until(ExpectedConditions.visibilityOf(newTaskTitleInput));
+		this.newTaskTitleInput.sendKeys("Go shopping");
+		this.newTaskSaveButton.click();
 	}
 	
 	public void closeNewTaskModal() {

@@ -1,7 +1,5 @@
 package com.qa.tdl.pom;
 
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,19 +14,31 @@ import com.qa.tdl.pom.modal.NewAssigneeModal;
 import com.qa.tdl.pom.modal.NewTaskModal;
 
 public class TdlSitePortal {
-	
+
 	@FindBy(xpath = "/html/body/div/div/div[1]/div/div[1]/button")
 	private WebElement newTaskButton;
-	
+
 	@FindBy(xpath = "/html/body/div/div/div[1]/div/div[2]/button")
 	private WebElement newAssigneeButton;
-	
+
 	@FindBy(xpath = "/html/body/div/div/div[1]/div/div[3]/button")
 	private WebElement editAssigneeButton;
+
+	@FindBy(css = "body[class=\"\"] #flush-heading4 .task-title")
+	private WebElement newTaskTitle;
 	
-	@FindBy(css = ".accordion-button")
-	private List<WebElement> taskElements;
+	@FindBy(xpath = "//*[@id=\"flush-heading0\"]/button")
+	private WebElement firstTaskElement;
 	
+	@FindBy(css = "#flush-collapse0.show")
+	private WebElement firstTaskExpanded;
+	
+	@FindBy(xpath = "//*[@id=\"flush-collapse0\"]/div/div/button[1]")
+	private WebElement editTaskButton;
+	
+	@FindBy(css = "body[class=\"\"] #flush-heading0 .task-title")
+	private WebElement editTaskTitle;
+
 	NewTaskModal newTaskModal;
 	NewAssigneeModal newAssigneeModal;
 	EditAssigneeModal editAssigneeModal;
@@ -44,22 +54,29 @@ public class TdlSitePortal {
 		editAssigneeModal = PageFactory.initElements(driver, EditAssigneeModal.class);
 		editTaskModal = PageFactory.initElements(driver, EditTaskModal.class);
 		addAssigneeModal = PageFactory.initElements(driver, AddAssigneeModal.class);
-		
+
 		webDriverWait = new WebDriverWait(driver, 3);
 	}
 
-	public boolean test() {		
+	public String newTask() {
 		this.newTaskButton.click();
-		newTaskModal.closeNewTaskModal();
+		this.newTaskModal.newTask();
 		
-		this.newAssigneeButton.click();
-		newAssigneeModal.closeNewAssigneeModal();
+		webDriverWait.until(ExpectedConditions.visibilityOf(newTaskTitle));
+		String actual = newTaskTitle.getText();
+
+		return actual;
+	}
+
+	public String editTask() throws InterruptedException {
+		this.firstTaskElement.click();
+		webDriverWait.until(ExpectedConditions.visibilityOf(firstTaskExpanded));
+		this.editTaskButton.click();
+		this.editTaskModal.editTask();
 		
-		this.editAssigneeButton.click();
-		editAssigneeModal.closeEditAssigneeModal();
+		webDriverWait.until(ExpectedConditions.visibilityOf(editTaskTitle));
+		String actual = editTaskTitle.getText();
 		
-		taskElements.forEach(WebElement::click);
-		
-		return true;
+		return actual;
 	}
 }
