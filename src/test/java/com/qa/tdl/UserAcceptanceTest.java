@@ -67,9 +67,9 @@ public class UserAcceptanceTest {
 		String result = page.newTask();
 		
 		if (result.isEmpty() || !("Go shopping".equals(result))) {
-			test.log(LogStatus.FAIL, "New Task test failed");
+			test.log(LogStatus.FAIL, "Test failed; new task doesn't show on interface");
 		} else {
-			test.log(LogStatus.PASS, "New Task test passed");
+			test.log(LogStatus.PASS, "Test passed; new task shows on interface");
 		}
 
 		Assertions.assertThat(result).isEqualTo("Go shopping");
@@ -82,9 +82,9 @@ public class UserAcceptanceTest {
 		String result = page.updateTask();
 		
 		if (result.isEmpty() || !("Fix table".equals(result))) {
-			test.log(LogStatus.FAIL, "Edit Task test failed");
+			test.log(LogStatus.FAIL, "Test failed; edited task doesn't show on interface");
 		} else {
-			test.log(LogStatus.PASS, "Edit Task test passed");
+			test.log(LogStatus.PASS, "Test passed; edited task shows on interface");
 		}
 
 		Assertions.assertThat(result).isEqualTo("Fix table");
@@ -98,9 +98,9 @@ public class UserAcceptanceTest {
 		int actual = (int) taskRepo.count();
 		
 		if (result != actual) {
-			test.log(LogStatus.FAIL, "Read All Task test failed");
+			test.log(LogStatus.FAIL, "Test failed; incorrect number of tasks being shown");
 		} else {
-			test.log(LogStatus.PASS, "Read All Task test passed");
+			test.log(LogStatus.PASS, "Test passed; correct number of tasks being shown");
 		}
 		
 		Assertions.assertThat(result).isEqualTo(actual);
@@ -114,9 +114,9 @@ public class UserAcceptanceTest {
 		int actual = (int) taskRepo.count();
 		
 		if (result != actual) {
-			test.log(LogStatus.FAIL, "Delete Task test failed");
+			test.log(LogStatus.FAIL, "Test failed; incorrect number of tasks being shown after deletion");
 		} else {
-			test.log(LogStatus.PASS, "Delete Task test passed");
+			test.log(LogStatus.PASS, "Test passed; correct number of tasks being shown after deletion");
 		}
 		
 		Assertions.assertThat(result).isEqualTo(actual);
