@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -49,12 +48,6 @@ public class UserAcceptanceTest {
 		page = PageFactory.initElements(driver, TdlSitePortal.class);
 		
 		driver.get(URL);
-	}
-	
-	@BeforeEach
-	public void refresh() {
-//		driver.get(URL);
-//		page.refresh();
 	}
 	
 	@Test
@@ -111,9 +104,9 @@ public class UserAcceptanceTest {
 		int actual = (int) taskRepo.count();
 		
 		if (result != actual) {
-			test.log(LogStatus.FAIL, "Test failed; incorrect number of tasks being shown after deletion");
+			test.log(LogStatus.FAIL, "Test failed; incorrect number of tasks visible after deletion");
 		} else {
-			test.log(LogStatus.PASS, "Test passed; correct number of tasks being shown after deletion");
+			test.log(LogStatus.PASS, "Test passed; correct number of tasks visible after deletion");
 		}
 		
 		Assertions.assertThat(result).isEqualTo(actual);
@@ -197,17 +190,37 @@ public class UserAcceptanceTest {
 	@Test
 	public void readAllAssigneeTest() {
 		test = report.startTest("Read All Assignees");
+		
+		int result = page.readAllAssignee();
+		int actual = (int) assigneeRepo.count();
+		
+		if (result != actual) {
+			test.log(LogStatus.FAIL, "Test failed; incorrect number of assignees being shown");
+		} else {
+			test.log(LogStatus.PASS, "Test passed; correct number of assignees being shown");
+		}
+		
+		Assertions.assertThat(result).isEqualTo(actual);
 	}
 	
 	@Test
 	public void deleteAssigneeTest() {
 		test = report.startTest("Delete Assignee");
+		
+		boolean result = page.deleteAssignee();
+		
+		if (result) {
+			test.log(LogStatus.FAIL, "Test failed; deleted assignee still visible after deletion");
+		} else {
+			test.log(LogStatus.PASS, "Test passed; deleted assignee not visible after deletion");
+		}
+		
+		Assertions.assertThat(result).isFalse();
 	}
 
 	@AfterEach
 	public void close() {
 		report.endTest(test);
-//		driver.close();
 	}
 
 	@AfterAll

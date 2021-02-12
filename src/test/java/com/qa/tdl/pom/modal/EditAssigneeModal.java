@@ -40,17 +40,40 @@ public class EditAssigneeModal {
 		
 	}
 	
+	public void deleteAssignee() {
+		// edit assignee select
+		Select editAssigneeSelect = new Select(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.cssSelector(".show #editAssigneeSelect"))));
+		editAssigneeSelect.selectByVisibleText("Sally");
+		// delete assignee button
+		targ = driver.findElement(By.xpath("//*[@id=\"editAssigneeModal\"]/div/div/div[3]/button[3]"));
+		targ.click();
+	}
+	
 	public boolean isAssigneeOnSelect(String name) {
 		// edit assignee select
 		Select editAssigneeSelect = new Select(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
 				By.cssSelector(".show #editAssigneeSelect"))));
+		boolean isPresent = false;
 		
 		for (WebElement option : editAssigneeSelect.getOptions()) {
 			if (name.equals(option.getText())) {
-				return true;
+				isPresent = true;
 			}
 		}
 		
-		return false;
+		this.closeEditAssigneeModal();
+		return isPresent;
+	}
+	
+	public int assigneesOnSelectSize() {
+		// edit assignee select
+		Select editAssigneeSelect = new Select(webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.cssSelector(".show #editAssigneeSelect"))));
+		
+		int size = editAssigneeSelect.getOptions().size();
+		this.closeEditAssigneeModal();
+		
+		return size;
 	}
 }

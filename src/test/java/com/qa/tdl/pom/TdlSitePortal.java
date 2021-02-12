@@ -202,6 +202,32 @@ public class TdlSitePortal {
 		// confirm new assignee ("Lee") appears on select
 		return this.editAssigneeModal.isAssigneeOnSelect("Lee");
 	}
+	
+	public int readAllAssignee() {
+		// edit assignee button
+		targ = driver.findElement(By.cssSelector(
+				"body > div > div > div.col-lg-4.d-flex.flex-column.justify-content-center.titleColumn > div > div:nth-child(3) > button"));
+		targ.click();
+		int result = this.editAssigneeModal.assigneesOnSelectSize();
+
+		return result;
+	}
+	
+	public boolean deleteAssignee() {
+		// edit assignee button
+		targ = driver.findElement(By.cssSelector(
+				"body > div > div > div.col-lg-4.d-flex.flex-column.justify-content-center.titleColumn > div > div:nth-child(3) > button"));
+		targ.click();
+		this.editAssigneeModal.deleteAssignee();
+		
+		// edit assignee button
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(
+				"body[class=\"\"] > div > div > div.col-lg-4.d-flex.flex-column.justify-content-center.titleColumn > div > div:nth-child(3) > button")));
+		targ.click();
+		
+		// confirm deleted assignee ("Sally") appears on select
+		return this.editAssigneeModal.isAssigneeOnSelect("Sally"); 
+	}
 
 	public void refresh() {
 		this.refreshButton.click();
