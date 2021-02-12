@@ -51,7 +51,8 @@ public class AssigneeControllerIntegrationTest {
 		List<AssigneeDTO> expectedResult = List.of(
 				new AssigneeDTO(1L, "Jane"),
 				new AssigneeDTO(2L, "Bob"),
-				new AssigneeDTO(3L, "Paul"));
+				new AssigneeDTO(3L, "Paul"),
+				new AssigneeDTO(4L, "Sally"));
 		
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, URL + "read/all");
 		
