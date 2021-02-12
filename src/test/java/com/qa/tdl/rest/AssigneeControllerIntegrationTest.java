@@ -28,7 +28,7 @@ import com.qa.tdl.persistence.dtos.AssigneeDTO;
 @AutoConfigureMockMvc
 @Sql(scripts = {"classpath:schema-test.sql", "classpath:data-test.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @ActiveProfiles(profiles = "test")
-public class AssigneeControllerIntegrationTest {
+class AssigneeControllerIntegrationTest {
 	
 	@Autowired
 	private MockMvc mock;
@@ -47,7 +47,7 @@ public class AssigneeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void readAll() throws Exception {
+	void readAll() throws Exception {
 		List<AssigneeDTO> expectedResult = List.of(
 				new AssigneeDTO(1L, "Jane"),
 				new AssigneeDTO(2L, "Bob"),
@@ -63,7 +63,7 @@ public class AssigneeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void readAssignee() throws Exception {
+	void readAssignee() throws Exception {
 		// resources
 		AssigneeDTO expectedResult = new AssigneeDTO(id, "Jane");
 		
@@ -82,7 +82,7 @@ public class AssigneeControllerIntegrationTest {
 	
 	// POST
 	@Test
-	public void create() throws Exception {
+	void create() throws Exception {
 		// resources
 		AssigneeDomain contentBody = new AssigneeDomain(4L, "Porter");
 		AssigneeDTO expectedResult = this.mapToDto(contentBody);
@@ -105,7 +105,7 @@ public class AssigneeControllerIntegrationTest {
 	
 	// PUT
 	@Test
-	public void updateAssignee() throws Exception {
+	void updateAssignee() throws Exception {
 		// resources
 		AssigneeDomain contentBody = new AssigneeDomain(2L, "Travis");
 		AssigneeDTO expectedResult = this.mapToDto(contentBody);
@@ -128,7 +128,7 @@ public class AssigneeControllerIntegrationTest {
 	
 	// DELETE
 	@Test
-	public void removeAssignee() throws Exception {
+	void removeAssignee() throws Exception {
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
 				.request(HttpMethod.DELETE, URL + "delete/" + id);
 		
@@ -138,7 +138,7 @@ public class AssigneeControllerIntegrationTest {
 	}
 	
 	@Test
-	public void removeAssigneeFailure() throws Exception {
+	void removeAssigneeFailure() throws Exception {
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
 				.request(HttpMethod.DELETE, URL + "delete/" + 7L);
 		

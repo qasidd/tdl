@@ -12,13 +12,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaskDomainUnitTest {
+class TaskDomainUnitTest {
 
 	private TaskDomain task;
 	private AssigneeDomain jane;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		Set<AssigneeDomain> assignees = new HashSet<>();
 		jane = new AssigneeDomain(1L, "Jane");
 		assignees.add(jane);
@@ -27,7 +27,7 @@ public class TaskDomainUnitTest {
 	}
 
 	@Test
-	public void settersTest() {
+	void settersTest() {
 		assertNotNull(task.getId());
 		assertNotNull(task.getTitle());
 		assertNotNull(task.getCompleted());
@@ -47,7 +47,7 @@ public class TaskDomainUnitTest {
 	}
 
 	@Test
-	public void createTaskDomainWithId() {
+	void createTaskDomainWithId() {
 		assertEquals(1L, task.getId(), 0);
 		assertEquals("Do laundry", task.getTitle());
 		assertEquals(false, task.getCompleted());
@@ -56,7 +56,7 @@ public class TaskDomainUnitTest {
 	}
 	
 	@Test
-	public void addOneAssignee() {
+	void addOneAssignee() {
 		Set<AssigneeDomain> compareSet = new HashSet<>();
 		compareSet.add(new AssigneeDomain(1L, "Jane"));
 		compareSet.add(new AssigneeDomain(2L, "Bob"));
@@ -66,20 +66,20 @@ public class TaskDomainUnitTest {
 	}
 	
 	@Test
-	public void removeOneAssignee() {
+	void removeOneAssignee() {
 		task.removeAssignee(jane);
 		Assertions.assertThat(task.getAssignees()).usingRecursiveComparison().isEqualTo(Set.of());
 	}
 	
 	@Test
-	public void emptyAssignees() {
+	void emptyAssignees() {
 		task.emptyAssignees();
 		Assertions.assertThat(task.getAssignees()).usingRecursiveComparison().isEqualTo(Set.of());
 	}
 
 
 	@Test
-	public void constructorWithoutId() {
+	void constructorWithoutId() {
 		TaskDomain task = new TaskDomain("Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(jane));
 		assertNull(task.getId());
 		assertNotNull(task.getTitle());
@@ -89,7 +89,7 @@ public class TaskDomainUnitTest {
 	}
 	
 	@Test
-	public void constructorWithoutAssignees() {
+	void constructorWithoutAssignees() {
 		TaskDomain task = new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"));
 		assertNotNull(task.getId());
 		assertNotNull(task.getTitle());
@@ -99,7 +99,7 @@ public class TaskDomainUnitTest {
 	}
 	
 	@Test
-	public void constructorWithoutIdAndAssignees() {
+	void constructorWithoutIdAndAssignees() {
 		TaskDomain task = new TaskDomain("Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"));
 		assertNull(task.getId());
 		assertNotNull(task.getTitle());
@@ -109,7 +109,7 @@ public class TaskDomainUnitTest {
 	}
 	
 	@Test
-	public void emptyConstructor() {
+	void emptyConstructor() {
 		TaskDomain task = new TaskDomain();
 		assertNull(task.getId());
 		assertNull(task.getTitle());
@@ -119,7 +119,7 @@ public class TaskDomainUnitTest {
 	}
 	
 	@Test
-	public void toStringTest() {
+	void toStringTest() {
 		String toString = "TaskDomain [id=1, title=Do laundry, completed=false, dateTimeSet=2021-02-05 08:00:00.0, assignees=[AssigneeDomain [id=1, name=Jane]]]";
 		assertEquals(toString, task.toString());
 	}

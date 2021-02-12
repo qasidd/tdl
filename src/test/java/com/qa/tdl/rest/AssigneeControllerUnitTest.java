@@ -17,7 +17,7 @@ import com.qa.tdl.persistence.dtos.AssigneeDTO;
 import com.qa.tdl.services.AssigneeService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class AssigneeControllerUnitTest {
+class AssigneeControllerUnitTest {
 
 	@MockBean
 	private AssigneeService service;
@@ -26,7 +26,7 @@ public class AssigneeControllerUnitTest {
 	private AssigneeController controller;
 
 	@Test
-	public void readAllTest() {
+	void readAllTest() {
 		AssigneeDTO TEST_DTO1 = new AssigneeDTO(1L, "Jane");
 		AssigneeDTO TEST_DTO2 = new AssigneeDTO(2L, "Bob");
 		AssigneeDTO TEST_DTO3 = new AssigneeDTO(3L, "Paul");
@@ -40,7 +40,7 @@ public class AssigneeControllerUnitTest {
 	}
 
 	@Test
-	public void readAssigneeTest() {
+	void readAssigneeTest() {
 		Long id = 1L;
 		AssigneeDTO TEST_DTO = new AssigneeDTO(id, "Jane");
 
@@ -52,7 +52,7 @@ public class AssigneeControllerUnitTest {
 	}
 
 	@Test
-	public void createTest() {
+	void createTest() {
 		AssigneeDomain TEST_ASSIGNEE = new AssigneeDomain(4L, "Porter");
 		AssigneeDTO TEST_DTO = new AssigneeDTO(TEST_ASSIGNEE.getId(), TEST_ASSIGNEE.getName());
 
@@ -64,7 +64,7 @@ public class AssigneeControllerUnitTest {
 	}
 
 	@Test
-	public void updateAssigneeTest() {
+	void updateAssigneeTest() {
 		Long id = 1L;
 		AssigneeDomain TEST_ASSIGNEE_UPDATE = new AssigneeDomain(id, "Travis");
 		AssigneeDTO TEST_DTO_UPDATE = new AssigneeDTO(id, TEST_ASSIGNEE_UPDATE.getName());
@@ -77,7 +77,7 @@ public class AssigneeControllerUnitTest {
 	}
 
 	@Test
-	public void removeAssigneeSuccessfulTest() {
+	void removeAssigneeSuccessfulTest() {
 		long id = 1L;
 		Mockito.when(this.service.delete(id)).thenReturn(true);
 
@@ -87,7 +87,7 @@ public class AssigneeControllerUnitTest {
 	}
 
 	@Test
-	public void removeAssigneeUnsuccessfulTest() {
+	void removeAssigneeUnsuccessfulTest() {
 		long id = 1L;
 		Mockito.when(this.service.delete(id)).thenReturn(false);
 

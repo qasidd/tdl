@@ -20,7 +20,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 @SpringBootTest
-public class UserAcceptanceTest {
+class UserAcceptanceTest {
 
 	private static final String URL = "http://localhost:8080";
 	private static WebDriver driver;
@@ -32,13 +32,13 @@ public class UserAcceptanceTest {
 	private AssigneeRepo assigneeRepo;
 	
 	@Autowired
-	public UserAcceptanceTest(TaskRepo taskRepo, AssigneeRepo assigneeRepo) {
+	UserAcceptanceTest(TaskRepo taskRepo, AssigneeRepo assigneeRepo) {
 		this.taskRepo = taskRepo;
 		this.assigneeRepo = assigneeRepo;
 	}
 
 	@BeforeAll
-	public static void setup() {
+	static void setup() {
 		report = new ExtentReports("target/reports/TdlSiteReport.html", true);
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
 
@@ -51,7 +51,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void newTaskTest() {
+	void newTaskTest() {
 		test = report.startTest("New Task");
 		
 		String result = page.newTask();
@@ -66,7 +66,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void updateTaskTest() throws InterruptedException {
+	void updateTaskTest() throws InterruptedException {
 		test = report.startTest("Update Task");
 		
 		String result = page.updateTask();
@@ -81,7 +81,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void readAllTest() {
+	void readAllTest() {
 		test = report.startTest("Read All Task");
 		
 		int result = page.readAllTask();
@@ -97,7 +97,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void deleteTaskTest() {
+	void deleteTaskTest() {
 		test = report.startTest("Delete Task");
 		
 		int result = page.deleteTask();
@@ -113,7 +113,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void markAsCompletedTest() {
+	void markAsCompletedTest() {
 		test = report.startTest("Mark as Completed Task");
 		
 		boolean result = page.markAsCompleted();
@@ -128,7 +128,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void addAssigneeToTaskTest() {
+	void addAssigneeToTaskTest() {
 		test = report.startTest("Add Assignee to Task");
 		
 		boolean result = page.addAssigneeToTask();
@@ -143,7 +143,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void removeAssigneeFromTaskTest() {
+	void removeAssigneeFromTaskTest() {
 		test = report.startTest("Remove Assignee from Task");
 		
 		boolean result = page.removeAssigneeFromTask();
@@ -158,7 +158,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void newAssigneeTest() {
+	void newAssigneeTest() {
 		test = report.startTest("New Assignee");
 		
 		boolean result = page.newAssignee();
@@ -173,7 +173,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void updateAssigneeTest() {
+	void updateAssigneeTest() {
 		test = report.startTest("Update Assignee");
 		
 		boolean result = page.updateAssignee();
@@ -188,7 +188,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void readAllAssigneeTest() {
+	void readAllAssigneeTest() {
 		test = report.startTest("Read All Assignees");
 		
 		int result = page.readAllAssignee();
@@ -204,7 +204,7 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void deleteAssigneeTest() {
+	void deleteAssigneeTest() {
 		test = report.startTest("Delete Assignee");
 		
 		boolean result = page.deleteAssignee();
@@ -219,12 +219,12 @@ public class UserAcceptanceTest {
 	}
 
 	@AfterEach
-	public void close() {
+	void close() {
 		report.endTest(test);
 	}
 
 	@AfterAll
-	public static void tearDown() {
+	static void tearDown() {
 		driver.quit();
 		report.flush();
 		report.close();

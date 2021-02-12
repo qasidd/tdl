@@ -12,13 +12,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AssigneeDomainUnitTest {
+class AssigneeDomainUnitTest {
 
 	private AssigneeDomain assignee;
 	private TaskDomain task;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		Set<TaskDomain> tasks = new HashSet<>();
 		task = new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"));
 		tasks.add(task);
@@ -28,7 +28,7 @@ public class AssigneeDomainUnitTest {
 	}
 
 	@Test
-	public void settersTest() {
+	void settersTest() {
 		assertNotNull(assignee.getId());
 		assertNotNull(assignee.getName());
 		assertNotNull(assignee.getTasks());
@@ -42,14 +42,14 @@ public class AssigneeDomainUnitTest {
 	}
 	
 	@Test
-	public void removeTasks() {
+	void removeTasks() {
 		assignee.removeTasks();
 		Assertions.assertThat(Set.of()).usingRecursiveComparison().isEqualTo(assignee.getTasks());
 		Assertions.assertThat(Set.of()).usingRecursiveComparison().isEqualTo(task.getAssignees());
 	}
 
 	@Test
-	public void createAssigneeDomainWithId() {
+	void createAssigneeDomainWithId() {
 		assertEquals(1L, assignee.getId(), 0);
 		assertEquals("Jane", assignee.getName());
 		Assertions.assertThat(Set.of(new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(assignee))))
@@ -57,7 +57,7 @@ public class AssigneeDomainUnitTest {
 	}
 
 	@Test
-	public void constructorWithoutId() {
+	void constructorWithoutId() {
 		AssigneeDomain assignee = new AssigneeDomain("Jane");
 		assertNull(assignee.getId());
 		assertNotNull(assignee.getName());
@@ -65,7 +65,7 @@ public class AssigneeDomainUnitTest {
 	}
 	
 	@Test
-	public void constructorWithoutTasks() {
+	void constructorWithoutTasks() {
 		AssigneeDomain assignee = new AssigneeDomain(1L, "Jane");
 		assertNotNull(assignee.getId());
 		assertNotNull(assignee.getName());
@@ -73,7 +73,7 @@ public class AssigneeDomainUnitTest {
 	}
 	
 	@Test
-	public void emptyConstructor() {
+	void emptyConstructor() {
 		AssigneeDomain assignee = new AssigneeDomain();
 		assertNull(assignee.getId());
 		assertNull(assignee.getName());
@@ -81,7 +81,7 @@ public class AssigneeDomainUnitTest {
 	}
 	
 	@Test
-	public void toStringTest() {
+	void toStringTest() {
 		String toString = "AssigneeDomain [id=1, name=Jane]";
 		assertEquals(toString, assignee.toString());
 	}

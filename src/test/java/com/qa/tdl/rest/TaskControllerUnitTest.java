@@ -22,7 +22,7 @@ import com.qa.tdl.persistence.dtos.TaskDTO;
 import com.qa.tdl.services.TaskService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TaskControllerUnitTest {
+class TaskControllerUnitTest {
 
 	@MockBean
 	private TaskService service;
@@ -31,7 +31,7 @@ public class TaskControllerUnitTest {
 	private TaskController controller;
 
 	@Test
-	public void readAllTest() {
+	void readAllTest() {
 		TaskDTO TEST_DTO1 = new TaskDTO(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"),
 				Set.of(new AssigneeDTO(1L, "Jane")));
 		TaskDTO TEST_DTO2 = new TaskDTO(2L, "Make coffee", false, Timestamp.valueOf("2021-01-21 13:00:00"),
@@ -49,7 +49,7 @@ public class TaskControllerUnitTest {
 	}
 
 	@Test
-	public void readTaskTest() {
+	void readTaskTest() {
 		Long id = 1L;
 		TaskDTO TEST_DTO = new TaskDTO(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"),
 				Set.of(new AssigneeDTO(1L, "Jane")));
@@ -62,7 +62,7 @@ public class TaskControllerUnitTest {
 	}
 
 	@Test
-	public void createTest() {
+	void createTest() {
 		TaskDomain TEST_TASK = new TaskDomain(5L, "Food shopping", false, Timestamp.from(Instant.now()));
 		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(),
 				TEST_TASK.getDateTimeSet(), null);
@@ -75,7 +75,7 @@ public class TaskControllerUnitTest {
 	}
 
 	@Test
-	public void updateTaskTest() {
+	void updateTaskTest() {
 		Long id = 1L;
 		TaskDomain TEST_TASK_UPDATE = new TaskDomain(id, "Buy pens", false, Timestamp.from(Instant.now()),
 				Set.of(new AssigneeDomain(1L, "Jane", null)));
@@ -91,7 +91,7 @@ public class TaskControllerUnitTest {
 	}
 
 	@Test
-	public void addAssigneeTest() {
+	void addAssigneeTest() {
 		Long id = 4L;
 		Long assigneeId = 2L;
 		TaskDTO TEST_DTO_UPDATE = new TaskDTO(id, "Buy masks", false, Timestamp.valueOf("2021-02-01 03:30:00"),
@@ -107,7 +107,7 @@ public class TaskControllerUnitTest {
 	}
 
 	@Test
-	public void removeAssigneeTest() {
+	void removeAssigneeTest() {
 		Long id = 2L;
 		Long assigneeIdRemove = 3L;
 		TaskDTO TEST_DTO_UPDATE = new TaskDTO(id, "Make Coffee", false, Timestamp.valueOf("2021-02-01 03:30:00"),
@@ -121,7 +121,7 @@ public class TaskControllerUnitTest {
 	}
 
 	@Test
-	public void removeTaskSuccessfulTest() {
+	void removeTaskSuccessfulTest() {
 		long id = 1L;
 		Mockito.when(this.service.delete(id)).thenReturn(true);
 
@@ -131,7 +131,7 @@ public class TaskControllerUnitTest {
 	}
 
 	@Test
-	public void removeTaskUnsuccessfulTest() {
+	void removeTaskUnsuccessfulTest() {
 		long id = 1L;
 		Mockito.when(this.service.delete(id)).thenReturn(false);
 
