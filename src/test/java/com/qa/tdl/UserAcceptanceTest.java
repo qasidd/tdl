@@ -165,13 +165,33 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void createAssigneeTest() {
-		test = report.startTest("Create Assignee");
+	public void newAssigneeTest() {
+		test = report.startTest("New Assignee");
+		
+		boolean result = page.newAssignee();
+		
+		if (!result) {
+			test.log(LogStatus.FAIL, "Test failed; new assignee doesn't show on interface");
+		} else {
+			test.log(LogStatus.PASS, "Test passed; new assignee shows on interface");
+		}
+
+		Assertions.assertThat(result).isTrue();
 	}
 	
 	@Test
 	public void updateAssigneeTest() {
 		test = report.startTest("Update Assignee");
+		
+		boolean result = page.updateAssignee();
+		
+		if (!result) {
+			test.log(LogStatus.FAIL, "Test failed; updated assignee doesn't show on interface");
+		} else {
+			test.log(LogStatus.PASS, "Test passed; updated assignee shows on interface");
+		}
+
+		Assertions.assertThat(result).isTrue();
 	}
 	
 	@Test
