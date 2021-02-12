@@ -111,6 +111,67 @@ public class TdlSitePortal {
 		return result;
 	}
 	
+	public boolean markAsCompleted() {
+		// task to be marked as completed (4th task in accordion)
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.xpath("//*[@id=\"flush-heading3\"]/button")));
+		targ.click();
+		// task to be marked as completed expanded (4th task)
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.cssSelector("#flush-collapse3.show")));
+		// mark as complete button
+		targ = driver.findElement(By.xpath("//*[@id=\"flush-collapse3\"]/div/div/button[3]"));
+		targ.click();
+		
+		// text that should be crossed out
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.xpath("//*[@id=\"flush-heading3\"]/button/div/span[1]/span")));
+		
+		return targ.getAttribute("class").contains("text-decoration-line-through");
+	}
+	
+	public boolean addAssignee() {
+		// task to add assignee to (4th task in accordion)
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.xpath("//*[@id=\"flush-heading3\"]/button")));
+		targ.click();
+		// task to add assignee to expanded (4th task)
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.cssSelector("#flush-collapse3.show")));
+		// add assignee button
+		targ = driver.findElement(By.xpath("//*[@id=\"flush-collapse3\"]/div/div/button[2]"));
+		targ.click();
+		
+		this.addAssigneeModal.addAssignee();
+		
+		// text that should have new assignee
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.cssSelector("body[class=\"\"] #flush-heading3 .assigned-to")));
+		
+		return targ.getText().contains("Bob");
+	}
+	
+	public boolean removeAssignee() {
+		// task to remove assignee from (4th task in accordion)
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.xpath("//*[@id=\"flush-heading1\"]/button")));
+		targ.click();
+		// task to remove assignee from expanded (4th task)
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.cssSelector("#flush-collapse1.show")));
+		// edit task button
+		targ = driver.findElement(By.xpath("//*[@id=\"flush-collapse1\"]/div/div/button[1]"));
+		targ.click();
+		
+		this.editTaskModal.removeAssignee();
+		
+		// text that should have new assignee
+		targ = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(
+				By.cssSelector("body[class=\"\"] #flush-heading1 .assigned-to")));
+		
+		return !(targ.getText().contains("Bob"));
+	}
+	
 	public void refresh() {
 		this.refreshButton.click();
 	}

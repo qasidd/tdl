@@ -9,12 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NewTaskModal {
 	
-	@FindBy(xpath = "//*[@id=\"newTaskModal\"]/div/div/div[3]/button[2]")
-	private WebElement newTaskSaveButton;
-	
-	@FindBy(xpath = "//*[@id=\"newTaskModal\"]/div/div/div[3]/button[1]")
-	private WebElement newTaskModalCloseButton;
-	
 	private WebDriverWait webDriverWait;
 	private WebDriver driver;
 	private WebElement targ;

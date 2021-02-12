@@ -12,9 +12,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.qa.tdl.persistence.repos.AssigneeRepo;
 import com.qa.tdl.persistence.repos.TaskRepo;
@@ -125,18 +122,46 @@ public class UserAcceptanceTest {
 	@Test
 	public void markAsCompletedTest() {
 		test = report.startTest("Mark as Completed Task");
+		
+		boolean result = page.markAsCompleted();
+		
+		if (!result) {
+			test.log(LogStatus.FAIL, "Test failed; task not marked as completed as it should be");
+		} else {
+			test.log(LogStatus.PASS, "Test passed; task marked as completed");
+		}
+		
+		Assertions.assertThat(result).isTrue();
 	}
 	
 	@Test
 	public void addAssigneeTest() {
 		test = report.startTest("Add Assignee to Task");
 		
+		boolean result = page.addAssignee();
+		
+		if (!result) {
+			test.log(LogStatus.FAIL, "Test failed; added assignee not visible on task");
+		} else {
+			test.log(LogStatus.PASS, "Test passed; added assignee visible on task");
+		}
+		
+		Assertions.assertThat(result).isTrue();
 	}
 	
 	@Test
 	public void removeAssigneeTest() {
 		test = report.startTest("Remove Assignee from Task");
 		
+		boolean result = page.removeAssignee();
+		
+		if (!result) {
+			test.log(LogStatus.FAIL, "Test failed; removed assignee still visible on task");
+		} else {
+			test.log(LogStatus.PASS, "Test passed; removed assignee not visible on task");
+		}
+		
+		Assertions.assertThat(result).isTrue();
 	}
 	
 	@Test
