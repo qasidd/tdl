@@ -46,7 +46,7 @@ public class AssigneeController {
 	// POST
 	@PostMapping("/create")
 	public ResponseEntity<AssigneeDTO> create(@RequestBody AssigneeDomain model) {
-		return new ResponseEntity<AssigneeDTO>(this.service.create(model), HttpStatus.CREATED);
+		return new ResponseEntity<>(this.service.create(model), HttpStatus.CREATED);
 	}
 	
 	// PUT

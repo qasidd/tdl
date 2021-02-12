@@ -12,13 +12,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaskDTOUnitTest {
+class TaskDTOUnitTest {
 
 	private TaskDTO task;
 	private AssigneeDTO jane;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		Set<AssigneeDTO> assignees = new HashSet<>();
 		jane = new AssigneeDTO(1L, "Jane");
 		assignees.add(jane);
@@ -27,7 +27,7 @@ public class TaskDTOUnitTest {
 	}
 
 	@Test
-	public void settersTest() {
+	void settersTest() {
 		assertNotNull(task.getId());
 		assertNotNull(task.getTitle());
 		assertNotNull(task.getCompleted());
@@ -47,7 +47,7 @@ public class TaskDTOUnitTest {
 	}
 
 	@Test
-	public void createTaskDTOWithId() {
+	void createTaskDTOWithId() {
 		assertEquals(1L, task.getId(), 0);
 		assertEquals("Do laundry", task.getTitle());
 		assertEquals(false, task.getCompleted());
@@ -56,7 +56,7 @@ public class TaskDTOUnitTest {
 	}
 	
 	@Test
-	public void emptyConstructor() {
+	void emptyConstructor() {
 		TaskDTO task = new TaskDTO();
 		assertNull(task.getId());
 		assertNull(task.getTitle());
@@ -66,7 +66,7 @@ public class TaskDTOUnitTest {
 	}
 	
 	@Test
-	public void toStringTest() {
+	void toStringTest() {
 		String toString = "TaskDTO [id=1, title=Do laundry, completed=false, dateTimeSet=2021-02-05 08:00:00.0]";
 		assertEquals(toString, task.toString());
 	}

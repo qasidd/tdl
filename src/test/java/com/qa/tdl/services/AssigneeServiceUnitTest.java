@@ -18,7 +18,7 @@ import com.qa.tdl.persistence.dtos.AssigneeDTO;
 import com.qa.tdl.persistence.repos.AssigneeRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class AssigneeServiceUnitTest {
+class AssigneeServiceUnitTest {
 	
 	@MockBean
 	private AssigneeRepo repo;
@@ -27,10 +27,10 @@ public class AssigneeServiceUnitTest {
 	private ModelMapper mapper;
 	
 	@Autowired
-	public AssigneeService service;
+	AssigneeService service;
 
 	@Test
-	public void createTest() {
+	void createTest() {
 		AssigneeDomain TEST_ASSIGNEE = new AssigneeDomain(4L, "Porter");
 		AssigneeDTO TEST_DTO = new AssigneeDTO(TEST_ASSIGNEE.getId(), TEST_ASSIGNEE.getName());
 		
@@ -48,7 +48,7 @@ public class AssigneeServiceUnitTest {
 	}
 	
 	@Test
-	public void readAssigneeTest() {
+	void readAssigneeTest() {
 		Long id = 1L;
 		AssigneeDomain TEST_ASSIGNEE = new AssigneeDomain(id, "Jane");
 		Optional<AssigneeDomain> TEST_OPTIONAL = Optional.of(TEST_ASSIGNEE);
@@ -69,7 +69,7 @@ public class AssigneeServiceUnitTest {
 	}
 	
 	@Test
-	public void readAllTest() {
+	void readAllTest() {
 		AssigneeDomain TEST_ASSIGNEE1 = new AssigneeDomain(1L, "Jane");
 		AssigneeDomain TEST_ASSIGNEE2 = new AssigneeDomain(2L, "Bob");
 		AssigneeDomain TEST_ASSIGNEE3 = new AssigneeDomain(3L, "Paul");
@@ -95,7 +95,7 @@ public class AssigneeServiceUnitTest {
 	}
 	
 	@Test
-	public void deleteTest() {
+	void deleteTest() {
 		Mockito.when(this.repo.findById(1L)).thenReturn(
 				Optional.of(new AssigneeDomain(1L, "Jane", new HashSet<>())));
 		
@@ -105,7 +105,7 @@ public class AssigneeServiceUnitTest {
 	}
 	
 	@Test
-	public void updateTest() {
+	void updateTest() {
 		Long id = 1L;
 		AssigneeDomain TEST_ASSIGNEE = new AssigneeDomain(id, "Jane", null);
 		AssigneeDomain TEST_ASSIGNEE_UPDATE = new AssigneeDomain(id, "Travis", null);

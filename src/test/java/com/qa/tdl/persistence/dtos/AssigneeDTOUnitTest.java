@@ -7,16 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AssigneeDTOUnitTest {
+class AssigneeDTOUnitTest {
 	private AssigneeDTO assignee;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		assignee = new AssigneeDTO(1L, "Jane");
 	}
 
 	@Test
-	public void settersTest() {
+	void settersTest() {
 		assertNotNull(assignee.getId());
 		assertNotNull(assignee.getName());
 		
@@ -27,20 +27,20 @@ public class AssigneeDTOUnitTest {
 	}
 
 	@Test
-	public void createAssigneeDTOWithId() {
+	void createAssigneeDTOWithId() {
 		assertEquals(1L, assignee.getId(), 0);
 		assertEquals("Jane", assignee.getName());
 	}
 	
 	@Test
-	public void emptyConstructor() {
+	void emptyConstructor() {
 		AssigneeDTO assignee = new AssigneeDTO();
 		assertNull(assignee.getId());
 		assertNull(assignee.getName());
 	}
 	
 	@Test
-	public void toStringTest() {
+	void toStringTest() {
 		String toString = "AssigneeDTO [id=1, name=Jane]";
 		assertEquals(toString, assignee.toString());
 	}

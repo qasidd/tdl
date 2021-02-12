@@ -24,7 +24,7 @@ import com.qa.tdl.persistence.repos.AssigneeRepo;
 import com.qa.tdl.persistence.repos.TaskRepo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TaskServiceUnitTest {
+class TaskServiceUnitTest {
 	
 	@MockBean
 	private TaskRepo repo;
@@ -36,10 +36,10 @@ public class TaskServiceUnitTest {
 	private ModelMapper mapper;
 	
 	@Autowired
-	public TaskService service;
+	TaskService service;
 
 	@Test
-	public void createTest() {
+	void createTest() {
 		TaskDomain TEST_TASK = new TaskDomain(5L, "Food shopping", false, Timestamp.from(Instant.now()));
 		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), TEST_TASK.getDateTimeSet(), null);
 		
@@ -57,7 +57,7 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
-	public void createTestDateTimeSetNull() {
+	void createTestDateTimeSetNull() {
 		TaskDomain TEST_TASK = new TaskDomain(5L, "Food shopping", false, null);
 		TaskDTO TEST_DTO = new TaskDTO(TEST_TASK.getId(), TEST_TASK.getTitle(), TEST_TASK.getCompleted(), Timestamp.from(Instant.now()), null);
 		
@@ -75,7 +75,7 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
-	public void readTaskTest() {
+	void readTaskTest() {
 		Long id = 1L;
 		TaskDomain TEST_TASK = new TaskDomain(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
 		Optional<TaskDomain> TEST_OPTIONAL = Optional.of(TEST_TASK);
@@ -96,7 +96,7 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
-	public void readAllTest() {
+	void readAllTest() {
 		TaskDomain TEST_TASK1 = new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
 		TaskDomain TEST_TASK2 = new TaskDomain(2L, "Make coffee", false, Timestamp.valueOf("2021-01-21 13:00:00"), Set.of(new AssigneeDomain(2L, "Bob", null), new AssigneeDomain(3L, "Paul", null)));
 		TaskDomain TEST_TASK3 = new TaskDomain(3L, "Take out bins", true, Timestamp.valueOf("2020-12-30 19:00:00"), Set.of(new AssigneeDomain(3L, "Paul", null)));
@@ -125,7 +125,7 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
-	public void deleteTest() {
+	void deleteTest() {
 		Mockito.when(this.repo.findById(1L)).thenReturn(
 				Optional.of(new TaskDomain(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), new HashSet<>())));
 		
@@ -135,7 +135,7 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
-	public void updateTest() {
+	void updateTest() {
 		Long id = 1L;
 		TaskDomain TEST_TASK = new TaskDomain(id, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDomain(1L, "Jane", null)));
 		TaskDomain TEST_TASK_UPDATE = new TaskDomain(id, "Buy pens", false, Timestamp.from(Instant.now()), Set.of(new AssigneeDomain(1L, "Jane", null)));
@@ -158,7 +158,7 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
-	public void addAssigneeTest() {
+	void addAssigneeTest() {
 		Long id = 4L;
 		Long assigneeId = 2L;
 		
@@ -188,7 +188,7 @@ public class TaskServiceUnitTest {
 	}
 	
 	@Test
-	public void removeAssigneeTest() {
+	void removeAssigneeTest() {
 		Long id = 2L;
 		Long assigneeIdRemove = 3L;
 		

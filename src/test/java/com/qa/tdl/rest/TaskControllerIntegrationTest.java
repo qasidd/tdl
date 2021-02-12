@@ -33,7 +33,7 @@ import com.qa.tdl.persistence.dtos.TaskDTO;
 @Sql(scripts = { "classpath:schema-test.sql",
 		"classpath:data-test.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @ActiveProfiles(profiles = "test")
-public class TaskControllerIntegrationTest {
+class TaskControllerIntegrationTest {
 
 	@Autowired
 	private MockMvc mock;
@@ -55,7 +55,7 @@ public class TaskControllerIntegrationTest {
 	}
 
 	@Test
-	public void readAll() throws Exception {
+	void readAll() throws Exception {
 		// resources
 		List<TaskDTO> expectedResult = List.of(
 				new TaskDTO(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"), Set.of(new AssigneeDTO(1L, "Jane"))), 
@@ -76,7 +76,7 @@ public class TaskControllerIntegrationTest {
 	}
 
 	@Test
-	public void readTask() throws Exception {
+	void readTask() throws Exception {
 		// resources
 		TaskDTO expectedResult = new TaskDTO(1L, "Do laundry", false, Timestamp.valueOf("2021-02-05 08:00:00"),
 				Set.of(new AssigneeDTO(1L, "Jane")));
@@ -94,7 +94,7 @@ public class TaskControllerIntegrationTest {
 
 	// POST
 	@Test
-	public void create() throws Exception {
+	void create() throws Exception {
 		// resources
 		TaskDomain contentBody = new TaskDomain(5L, "Food shopping", false, Timestamp.valueOf("2021-01-21 13:00:00"));
 		TaskDTO expectedResult = this.mapToDto(contentBody);
@@ -114,7 +114,7 @@ public class TaskControllerIntegrationTest {
 
 	// PUT
 	@Test
-	public void updateTask() throws Exception {
+	void updateTask() throws Exception {
 		// resources
 		TaskDomain contentBody = new TaskDomain(2L, "Food shopping", false, Timestamp.valueOf("2021-01-21 13:00:00"),
 				Set.of(new AssigneeDomain(2L, "Bob", null), new AssigneeDomain(3L, "Paul", null)));
@@ -133,7 +133,7 @@ public class TaskControllerIntegrationTest {
 		this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchContent);
 	}
 
-	public void addAssignee() throws Exception {
+	void addAssignee() throws Exception {
 		// resources
 		TaskDTO expectedResult = this.mapToDto(new TaskDomain(4L, "Buy masks", false,
 				Timestamp.valueOf("2021-02-01 03:30:00"), Set.of(new AssigneeDomain(2L, "Bob", null))));
@@ -150,7 +150,7 @@ public class TaskControllerIntegrationTest {
 		this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchContent);
 	}
 
-	public void removeAssignee() throws Exception {
+	void removeAssignee() throws Exception {
 		// resources
 		TaskDTO expectedResult = this.mapToDto(new TaskDomain(2L, "Make coffee", false,
 				Timestamp.valueOf("2021-02-01 03:30:00"), Set.of(new AssigneeDomain(2L, "Bob", null))));
@@ -170,7 +170,7 @@ public class TaskControllerIntegrationTest {
 
 	// DELETE
 	@Test
-	public void removeTask() throws Exception {
+	void removeTask() throws Exception {
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.DELETE,
 				URL + "delete/" + id);
 
@@ -180,7 +180,7 @@ public class TaskControllerIntegrationTest {
 	}
 
 	@Test
-	public void removeTaskFailure() throws Exception {
+	void removeTaskFailure() throws Exception {
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.DELETE,
 				URL + "delete/" + 7L);
 
