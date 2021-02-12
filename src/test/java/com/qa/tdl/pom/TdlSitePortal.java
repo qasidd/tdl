@@ -80,9 +80,11 @@ public class TdlSitePortal {
 	}
 
 	public int readAllTask() {
+		webDriverWait.
+			until(ExpectedConditions.textToBe(By.cssSelector("#flush-heading0 > button > div > span.task-title"), "Do laundry"));
+		
 		// accordion items
-		List<WebElement> allTaskElements = webDriverWait
-				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(".accordion-item")));
+		List<WebElement> allTaskElements = driver.findElements(By.cssSelector(".accordion-item"));
 
 		int result = allTaskElements.size();
 
@@ -130,7 +132,7 @@ public class TdlSitePortal {
 		return targ.getAttribute("class").contains("text-decoration-line-through");
 	}
 
-	public boolean addAssignee() {
+	public boolean addAssigneeToTask() {
 		// task to add assignee to (4th task in accordion)
 		targ = webDriverWait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"flush-heading3\"]/button")));
@@ -142,16 +144,16 @@ public class TdlSitePortal {
 		targ = driver.findElement(By.xpath("//*[@id=\"flush-collapse3\"]/div/div/button[2]"));
 		targ.click();
 
-		this.addAssigneeModal.addAssignee();
+		this.addAssigneeModal.addAssigneeToTask();
 
 		// text that should have new assignee
 		targ = webDriverWait.until(ExpectedConditions
 				.presenceOfElementLocated(By.cssSelector("body[class=\"\"] #flush-heading3 .assigned-to")));
 
-		return targ.getText().contains("Bob");
+		return targ.getText().contains("Paul");
 	}
 
-	public boolean removeAssignee() {
+	public boolean removeAssigneeFromTask() {
 		// task to remove assignee from (4th task in accordion)
 		targ = webDriverWait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"flush-heading1\"]/button")));
@@ -163,7 +165,7 @@ public class TdlSitePortal {
 		targ = driver.findElement(By.xpath("//*[@id=\"flush-collapse1\"]/div/div/button[1]"));
 		targ.click();
 
-		this.editTaskModal.removeAssignee();
+		this.editTaskModal.removeAssigneeFromTask();
 
 		// text that should have new assignee
 		targ = webDriverWait.until(ExpectedConditions

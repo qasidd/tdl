@@ -128,10 +128,10 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void addAssigneeTest() {
+	public void addAssigneeToTaskTest() {
 		test = report.startTest("Add Assignee to Task");
 		
-		boolean result = page.addAssignee();
+		boolean result = page.addAssigneeToTask();
 		
 		if (!result) {
 			test.log(LogStatus.FAIL, "Test failed; added assignee not visible on task");
@@ -143,10 +143,10 @@ public class UserAcceptanceTest {
 	}
 	
 	@Test
-	public void removeAssigneeTest() {
+	public void removeAssigneeFromTaskTest() {
 		test = report.startTest("Remove Assignee from Task");
 		
-		boolean result = page.removeAssignee();
+		boolean result = page.removeAssigneeFromTask();
 		
 		if (!result) {
 			test.log(LogStatus.FAIL, "Test failed; removed assignee still visible on task");

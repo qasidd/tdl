@@ -9,7 +9,8 @@ INSERT INTO assignee_domain(NAME)
 VALUES
 ('Jane'),
 ('Bob'),
-('Paul');
+('Paul'),
+('Sally');
 
 INSERT INTO tasks_assignees(TASK_ID, ASSIGNEE_ID)
 VALUES

@@ -28,7 +28,7 @@ public class EditTaskModal {
 		targ.click();
 	}
 	
-	public void removeAssignee() {
+	public void removeAssigneeFromTask() {
 		// edit task remove assignee select
 		Select addAssigneeSelect = new Select(
 				webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".show #editTaskRemoveAssigneeSelect"))));

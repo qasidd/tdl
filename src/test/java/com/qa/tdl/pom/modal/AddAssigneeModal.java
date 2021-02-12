@@ -19,11 +19,11 @@ public class AddAssigneeModal {
 		this.driver = driver;
 	}
 	
-	public void addAssignee() {
+	public void addAssigneeToTask() {
 		// add assignee select
 		Select addAssigneeSelect = new Select(
 				webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".show #addAssigneeToTaskSelect"))));
-		addAssigneeSelect.selectByVisibleText("Bob");
+		addAssigneeSelect.selectByVisibleText("Paul");
 		// add assignee save button
 		targ = driver.findElement(By.id("addAssigneeToTaskSubmit"));
 		targ.click();
