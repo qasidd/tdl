@@ -55,7 +55,7 @@ To create a copy of this repository in to your local machine:
 
 ## Running the tests
 
-All testing of this program was done using unit tests. Unit testing is a software testing method that isolates individual units of the software, and validates whether each of them performs as designed. These units are considered to be the smallest testable parts of an application. JUnit and Mockito were used to write the tests.
+Testing of this program was done using unit. Unit testing is a software testing method that isolates individual units of the software, and validates whether each of them performs as designed. These units are considered to be the smallest testable parts of an application. JUnit and Mockito were used to write the tests.
 
 To deploy tests using Maven, simply run `mvn clean test` in the root directory of your local repository.
 
@@ -63,7 +63,8 @@ To deploy tests using Maven, simply run `mvn clean test` in the root directory o
 
 To create a self-contained executable WAR using Maven:
 
-1. Add 
+1. Make sure the following `<packaging>` element is in your `pom.xml` file:
+![](readme-img/6.png)
 2. Open the directory containing the repository in a terminal
 3. Run `mvn clean package`
 
