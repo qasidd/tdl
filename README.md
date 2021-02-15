@@ -70,7 +70,9 @@ To deploy tests using Maven, simply run `mvn clean test` in the root directory o
 To create a self-contained executable WAR using Maven:
 
 1. Make sure the following `<packaging>` element is in your `pom.xml` file:
+
 ![](readme-img/6.png)
+
 2. Open the directory containing the repository in a terminal
 3. Run `mvn clean package`
 
