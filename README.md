@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-[JDK 8 or over](https://www.oracle.com/java/technologies/javase-jre8-downloads.html)
+[JDK 11 or over](https://www.oracle.com/java/technologies/javase-jre8-downloads.html)
 
 [Maven](http://maven.apache.org/download.cgi)
 
@@ -55,7 +55,13 @@ To create a copy of this repository in to your local machine:
 
 ## Running the tests
 
-Testing of this program was done using unit. Unit testing is a software testing method that isolates individual units of the software, and validates whether each of them performs as designed. These units are considered to be the smallest testable parts of an application. JUnit and Mockito were used to write the tests.
+Three types of tests were deployed in regards to the validation of this program - unit, integration and user acceptance. 
+
+Unit testing isolates individual units of the software and validates whether each of them performs as designed. These units are considered to be the smallest testable parts of an application. JUnit and Mockito were used to write these tests. Classes which contains unit tests have the same name as the class they are testing, followed by `UnitTest`.
+
+Integration testing validates the functionality, performance and reliability of a section of units which interact with each other. It looks to expose defects in those interactions and verify that these software modules work in harmony with each other. The integration tests that come with this repository take a 'top down' approach; the classes which contain these tests have the name of the 'top' class, followed by `IntegrationTest`.
+
+User acceptance testing validates the program against previously agreed requirements, as well as sees if it can be used by end-users. They are often designed as to mimic real-world use of the application. These tests can be found in the `UserAcceptanceTest` class.
 
 To deploy tests using Maven, simply run `mvn clean test` in the root directory of your local repository.
 
@@ -76,13 +82,14 @@ To create a self-contained executable WAR using Maven:
 
 ## Built With
 
-* [Java 8](https://www.oracle.com/java/)
+* [Java 11](https://www.oracle.com/java/)
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [MySQL](https://www.mysql.com/) - RDBMS
+* [Spring Boot](https://spring.io/) - IOCC Framework
+* [Bootstrap 5](https://getbootstrap.com/) - Frontend Framework
 * [Git](https://git-scm.com/) - Version Control System
-* [JUnit](https://junit.org/junit4/) & [Mockito](https://site.mockito.org/) - Testing
+* [JUnit](https://junit.org/junit4/), [Mockito](https://site.mockito.org/) & [Selenium](https://robotframework.org/SeleniumLibrary/) - Testing
+* [Sonarqube](https://www.sonarqube.org/) - Code Quality Inspection
 * [Jira](https://www.atlassian.com/software/jira) - Project Management
-* [GCP](https://cloud.google.com/) - Database Host
 
 ## Authors
 
