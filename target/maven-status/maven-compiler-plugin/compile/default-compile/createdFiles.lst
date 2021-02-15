@@ -1,0 +1,12 @@
+com\qa\tdl\services\TaskService.class
+com\qa\tdl\persistence\repos\TaskRepo.class
+com\qa\tdl\config\AppConfig.class
+com\qa\tdl\persistence\domain\TaskDomain.class
+com\qa\tdl\services\AssigneeService.class
+com\qa\tdl\persistence\domain\AssigneeDomain.class
+com\qa\tdl\persistence\repos\AssigneeRepo.class
+com\qa\tdl\persistence\dtos\AssigneeDTO.class
+com\qa\tdl\TdlApplication.class
+com\qa\tdl\rest\AssigneeController.class
+com\qa\tdl\rest\TaskController.class
+com\qa\tdl\persistence\dtos\TaskDTO.class

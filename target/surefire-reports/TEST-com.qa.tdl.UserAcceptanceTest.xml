@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.qa.tdl.UserAcceptanceTest" time="19.827" tests="11" errors="0" skipped="0" failures="0">
+  <properties/>
+  <testcase name="readAllTest" classname="com.qa.tdl.UserAcceptanceTest" time="0.57"/>
+  <testcase name="markAsCompletedTest" classname="com.qa.tdl.UserAcceptanceTest" time="1.162"/>
+  <testcase name="removeAssigneeFromTaskTest" classname="com.qa.tdl.UserAcceptanceTest" time="1.796"/>
+  <testcase name="updateTaskTest" classname="com.qa.tdl.UserAcceptanceTest" time="1.774"/>
+  <testcase name="readAllAssigneeTest" classname="com.qa.tdl.UserAcceptanceTest" time="0.647"/>
+  <testcase name="newTaskTest" classname="com.qa.tdl.UserAcceptanceTest" time="1.49"/>
+  <testcase name="newAssigneeTest" classname="com.qa.tdl.UserAcceptanceTest" time="1.847"/>
+  <testcase name="deleteAssigneeTest" classname="com.qa.tdl.UserAcceptanceTest" time="2.118"/>
+  <testcase name="updateAssigneeTest" classname="com.qa.tdl.UserAcceptanceTest" time="2.159"/>
+  <testcase name="deleteTaskTest" classname="com.qa.tdl.UserAcceptanceTest" time="0.993"/>
+  <testcase name="addAssigneeToTaskTest" classname="com.qa.tdl.UserAcceptanceTest" time="1.778"/>
+</testsuite>

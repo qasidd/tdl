@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.qa.tdl.services.TaskServiceUnitTest" time="1.258" tests="8" errors="0" skipped="0" failures="0">
+  <properties/>
+  <testcase name="readTaskTest" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.004"/>
+  <testcase name="readAllTest" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.005"/>
+  <testcase name="createTestDateTimeSetNull" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.004"/>
+  <testcase name="updateTest" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.005"/>
+  <testcase name="addAssigneeTest" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.004"/>
+  <testcase name="removeAssigneeTest" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.004"/>
+  <testcase name="createTest" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.005"/>
+  <testcase name="deleteTest" classname="com.qa.tdl.services.TaskServiceUnitTest" time="0.004"/>
+</testsuite>

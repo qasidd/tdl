@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0.024" tests="10" errors="0" skipped="0" failures="0">
+  <properties/>
+  <testcase name="constructorWithoutId" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0"/>
+  <testcase name="emptyAssignees" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0.001"/>
+  <testcase name="createTaskDomainWithId" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0.002"/>
+  <testcase name="emptyConstructor" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0.001"/>
+  <testcase name="constructorWithoutAssignees" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0"/>
+  <testcase name="addOneAssignee" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0.001"/>
+  <testcase name="toStringTest" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0.013"/>
+  <testcase name="settersTest" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0"/>
+  <testcase name="constructorWithoutIdAndAssignees" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0"/>
+  <testcase name="removeOneAssignee" classname="com.qa.tdl.persistence.domain.TaskDomainUnitTest" time="0.001"/>
+</testsuite>
