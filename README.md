@@ -3,7 +3,7 @@ Coverage: 98.9% on src/main/java
 
 # To-Do List (TDL)
 
-A CRUD web application with a Spring Boot backend and a Bootstrap-based frontend. The database comprises of two tables called Tasks and Assignees, as well as an intermediary table named Tasks_Assignees, created to handle the many-to-many relationship between Items and Orders.
+A CRUD web application with a Spring Boot backend and a Bootstrap-based frontend. The database comprises of two tables called Tasks and Assignees, as well as an intermediary table named Tasks_Assignees, created to handle the many-to-many relationship between Tasks and Assignees.
 
 ## Getting Started
 
